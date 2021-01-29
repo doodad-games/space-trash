@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     const float HORIZONTAL_VELOCITY = 1f;
-    const float MINMAX_VERTICAL_VELOCITY = 2.5f;
+    const float MINMAX_VERTICAL_VELOCITY = 3.5f;
     const float VERTICAL_VELOCITY_INC_STEP = 0.05f;
     const float MINMAX_Y_POS = 4f;
     const float TORQUE_INC_STEP = -0.05f;
@@ -16,13 +16,14 @@ public class Player : MonoBehaviour
 
     float _torque;
 
-    void Awake()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
-    }
+    void Awake() => _rb = GetComponent<Rigidbody2D>();
 
-    void OnEnable() => I = this;
+    void OnEnable()
+    {
+        I = this;
+        _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
+        _torque = 0f;
+    }
 
     void FixedUpdate()
     {
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
 
     void ApplyUpDownInput()
     {
-        var vertInput = GameplayInputController.VerticalInput;
+        var vertInput = GameplayInput.VerticalInput;
         if (vertInput == 0)
             return;
 
@@ -66,7 +67,7 @@ public class Player : MonoBehaviour
 
     void ApplyRotationalInput()
     {
-        var rotInput = GameplayInputController.RotationalInput;
+        var rotInput = GameplayInput.RotationalInput;
         if (rotInput != 0)
         {
             var step = TORQUE_INC_STEP * rotInput;

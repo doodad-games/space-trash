@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameplayInputController
+public class GameplayInput
 {
     public static int VerticalInput
     {
