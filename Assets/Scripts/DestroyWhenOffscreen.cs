@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DestroyWhenOffscreen : MonoBehaviour
 {
-    const float DISTANCE_FROM_PLAYER = 8f;
+    const float DISTANCE_FROM_PLAYER = -14f;
 
     void FixedUpdate() =>
         CheckForDestruction();

@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         I = this;
         _destroyed = false;
-        _torque = 0f;
+        _torque = 2f;
         _prevVertInput = _prevRotInput = 0;
 
         _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
