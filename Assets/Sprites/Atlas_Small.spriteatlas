@@ -44,17 +44,33 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 1f23f71753dcffc44a5214ec51b73d8f, type: 3}
-    totalSpriteSurfaceArea: 131072
+    totalSpriteSurfaceArea: 655360
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 4ba54931485dc50419e44b25a4a98e10, type: 3}
+  - {fileID: 21300000, guid: 226bf1c14f0fbb74fb1f77d5daf0f64a, type: 3}
   - {fileID: 21300000, guid: 8c458ed1142d5aa4c9f8afa945549d4d, type: 3}
+  - {fileID: 21300000, guid: 8f529cb4d6515af4aaa85ae9138d9da8, type: 3}
+  - {fileID: 21300000, guid: 0283f015dc756b547a7dcba7494f44cd, type: 3}
+  - {fileID: 21300000, guid: e8e52c7b2b6ae094d90ec4543ab19781, type: 3}
+  - {fileID: 21300000, guid: 37a9afdc9af10d949be12d9ab4225506, type: 3}
+  - {fileID: 21300000, guid: 835823ecf90169e4b966dc474c01b08a, type: 3}
+  - {fileID: 21300000, guid: 4004d03df1b485c43a14f02e2656b7e8, type: 3}
+  - {fileID: 21300000, guid: c497e87dfb2cf0045ac34f64ebdcf1e1, type: 3}
   m_PackedSpriteNamesToIndex:
   - explosion-text
+  - tutorial-w
   - white-square
+  - tutorial-d
+  - tutorial-s
+  - tutorial-down
+  - tutorial-right
+  - tutorial-up
+  - tutorial-left
+  - tutorial-a
   m_RenderDataMap: {}
   m_Tag: Atlas_Small
   m_IsVariant: 0

@@ -4,8 +4,7 @@ using UnityEngine;
 public class DeathTrash : MonoBehaviour
 {
     const float MINMAX_Y_RANGE = 4f;
-    //const float X_SPAWN_OFFSET = 26f;
-    const float X_SPAWN_OFFSET = 6f;
+    const float X_SPAWN_OFFSET = 26f;
 
     public static event Action onSpawnFailed;
 
