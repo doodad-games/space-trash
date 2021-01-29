@@ -44,9 +44,19 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        var deathTrash = collision.rigidbody.GetComponent<DeathTrash>();
+        var deathTrash = collision.collider.GetComponentInParent<DeathTrash>();
         if (deathTrash != null)
-            HandleCollisionWithDeathTrash(collision);
+        {
+            DestroyFromCollision(collision);
+            return;
+        }
+
+        var bullet = collision.collider.GetComponentInParent<TurretBullet>();
+        if (bullet != null)
+        {
+            DestroyFromCollision(collision);
+            return;
+        }
     }
 
     void OnDisable() => I = null;
@@ -109,7 +119,7 @@ public class Player : MonoBehaviour
         _prevRotInput = rotInput;
     }
 
-    void HandleCollisionWithDeathTrash(Collision2D collision)
+    void DestroyFromCollision(Collision2D collision)
     {
         if (_destroyed)
             return;

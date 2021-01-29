@@ -10,7 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(CameraRectPositioner2D))]
 public class GameplayCamera : MonoBehaviour
 {
-    static Vector3 _playerOffset = new Vector3(6, 0, 0);
+    static Vector3 _playerOffset = new Vector3(5, 0, 0);
     static Vector2 _coreDisplaySize = new Vector2(16, 9);
 
     CameraRectPositioner2D _cameraPositioner;
@@ -20,14 +20,24 @@ public class GameplayCamera : MonoBehaviour
 
     void Update()
     {
+        MoveToPlayer();
+        UpdateCameraPositionerWorldRect();
+    }
+
+    void MoveToPlayer()
+    {
         var pos = Player.I.transform.position + _playerOffset;
 
         if (!Mathf.Approximately(pos.y, 0))
             pos = new Vector3(pos.x, 0, 0);
 
         transform.position = pos;
+    }
 
-        var bottomLeft = (Vector2)pos - _coreDisplaySize / 2f;
+    
+    void UpdateCameraPositionerWorldRect()
+    {
+        var bottomLeft = (Vector2)transform.position - _coreDisplaySize / 2f;
         _cameraPositioner.worldRect = new Rect(bottomLeft, _coreDisplaySize);
     }
 }

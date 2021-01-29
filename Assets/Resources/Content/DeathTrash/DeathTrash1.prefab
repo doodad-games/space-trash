@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 7139901033347867838}
   - component: {fileID: 1355340335033401563}
   - component: {fileID: 9221662909379777123}
+  - component: {fileID: -6238258106975340415}
   m_Layer: 0
   m_Name: DeathTrash1
   m_TagString: Untagged
@@ -253,3 +254,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-6238258106975340415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885279734932309986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5207b54bd93fe34db9f585c310c39a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

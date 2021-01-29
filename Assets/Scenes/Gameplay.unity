@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 249200061}
   - component: {fileID: 249200063}
   - component: {fileID: 249200062}
+  - component: {fileID: 249200064}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -416,6 +417,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6558575e37299074a8b5905674c7ccd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &249200064
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249200060}
+  m_Enabled: 1
 --- !u!1 &375435598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1307,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1723019906}
   - component: {fileID: 1723019905}
-  - component: {fileID: 1723019904}
   - component: {fileID: 1723019903}
   - component: {fileID: 1723019902}
   - component: {fileID: 1723019901}
@@ -1372,14 +1380,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &1723019904
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723019900}
-  m_Enabled: 1
 --- !u!20 &1723019905
 Camera:
   m_ObjectHideFlags: 0

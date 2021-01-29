@@ -4,9 +4,10 @@ using UnityEngine;
 public class DeathTrash : MonoBehaviour
 {
     const float MINMAX_Y_RANGE = 4f;
-    const float X_SPAWN_OFFSET = 26f;
+    const float X_SPAWN_OFFSET = 25f;
 
     public static event Action onSpawnFailed;
+    public static event Action onTurretSpawnPrevented;
 
     public static void Spawn()
     {
@@ -37,11 +38,26 @@ public class DeathTrash : MonoBehaviour
         if (other.gameObject.layer == GameConfig.SpawnCheckLayer)
         {
             var otherDeathTrash = other.GetComponentInParent<DeathTrash>();
-            if (otherDeathTrash._createdAt < _createdAt)
-                return;
+            if (otherDeathTrash != null)
+            {
+                if (otherDeathTrash._createdAt >= _createdAt)
+                    return;
+                if (otherDeathTrash._createdAt == _createdAt)
+                    Debug.LogWarning("Multiple death trash spawned on same frame :O");
 
-            Destroy(otherDeathTrash.gameObject);
-            onSpawnFailed?.Invoke();
+                Destroy(otherDeathTrash.gameObject);
+
+                onSpawnFailed?.Invoke();
+            }
+            else
+            {
+                var otherTurret = other.GetComponentInParent<Turret>();
+                if (otherTurret == null)
+                    return;
+                
+                Destroy(otherTurret.gameObject);
+                onTurretSpawnPrevented?.Invoke();
+            }
         }
     }
 }
