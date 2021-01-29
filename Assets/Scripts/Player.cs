@@ -4,8 +4,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     const float HORIZONTAL_VELOCITY = 1f;
-    const float MINMAX_VERTICAL_VELOCITY = 3.5f;
-    const float VERTICAL_VELOCITY_INC_STEP = 0.05f;
+    const float MINMAX_VERTICAL_VELOCITY = 4f;
+    const float VERTICAL_VELOCITY_INC_STEP = 0.1f;
+    const float VERTICAL_VELOCITY_OTHER_DIR_MULTIPLIER = 2.5f;
     const float MINMAX_Y_POS = 4f;
     const float TORQUE_INC_STEP = -0.05f;
     const float TORQUE_OTHER_DIR_MULTIPLIER = 2.5f;
@@ -14,15 +15,21 @@ public class Player : MonoBehaviour
 
     Rigidbody2D _rb;
 
+    bool _destroyed;
     float _torque;
+    int _prevVertInput;
+    int _prevRotInput;
 
     void Awake() => _rb = GetComponent<Rigidbody2D>();
 
     void OnEnable()
     {
         I = this;
-        _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
+        _destroyed = false;
         _torque = 0f;
+        _prevVertInput = _prevRotInput = 0;
+
+        _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
     }
 
     void FixedUpdate()
@@ -32,22 +39,37 @@ public class Player : MonoBehaviour
         ApplyRotationalInput();
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        var deathTrash = other.GetComponentInParent<DeathTrash>();
+        if (deathTrash != null)
+            HandleCollisionWithDeathTrash();
+    }
+
     void OnDisable() => I = null;
 
     void ApplyUpDownInput()
     {
         var vertInput = GameplayInput.VerticalInput;
-        if (vertInput == 0)
-            return;
+        if (vertInput != 0)
+        {
+            if (vertInput != _prevVertInput)
+                SoundController.Play("thrusters");
 
-        var curVert = _rb.velocity.y;
-        var newVert = Mathf.Clamp(
-            _rb.velocity.y + VERTICAL_VELOCITY_INC_STEP * vertInput,
-            MINMAX_VERTICAL_VELOCITY * -1,
-            MINMAX_VERTICAL_VELOCITY
-        );
+            var step = VERTICAL_VELOCITY_INC_STEP * vertInput;
+            if (Mathf.Sign(step) != Mathf.Sign(_rb.velocity.y))
+                step *= VERTICAL_VELOCITY_OTHER_DIR_MULTIPLIER;
 
-        _rb.velocity = new Vector2(_rb.velocity.x, newVert);
+            var newVert = Mathf.Clamp(
+                _rb.velocity.y + step,
+                MINMAX_VERTICAL_VELOCITY * -1,
+                MINMAX_VERTICAL_VELOCITY
+            );
+
+            _rb.velocity = new Vector2(_rb.velocity.x, newVert);
+        }
+
+        _prevVertInput = vertInput;
     }
 
     void ClampUpDownPosition()
@@ -70,6 +92,9 @@ public class Player : MonoBehaviour
         var rotInput = GameplayInput.RotationalInput;
         if (rotInput != 0)
         {
+            if (rotInput != _prevRotInput)
+                SoundController.Play("thrusters");
+
             var step = TORQUE_INC_STEP * rotInput;
             if (Mathf.Sign(step) != Mathf.Sign(_torque))
                 step *= TORQUE_OTHER_DIR_MULTIPLIER;
@@ -78,5 +103,22 @@ public class Player : MonoBehaviour
         }
 
         _rb.rotation += _torque;
+        _prevRotInput = rotInput;
+    }
+
+    void HandleCollisionWithDeathTrash()
+    {
+        if (_destroyed)
+            return;
+        _destroyed = true;
+
+        SoundController.Play("game-over");
+
+        new Async(this)
+            .Lerp(
+                1f, 0f, 1f,
+                (step) => Time.timeScale = step,
+                TimeMode.Unscaled
+            );
     }
 }
