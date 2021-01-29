@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -10,6 +11,8 @@ public class Player : MonoBehaviour
     const float MINMAX_Y_POS = 4f;
     const float TORQUE_INC_STEP = -0.05f;
     const float TORQUE_OTHER_DIR_MULTIPLIER = 2.5f;
+
+    public static event Action onDestroyed;
 
     public static Player I { get; private set; }
 
@@ -126,5 +129,7 @@ public class Player : MonoBehaviour
                 (step) => Time.timeScale = step,
                 TimeMode.Unscaled
             );
+        
+        onDestroyed?.Invoke();
     }
 }
