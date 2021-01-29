@@ -39,11 +39,11 @@ public class Player : MonoBehaviour
         ApplyRotationalInput();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        var deathTrash = other.GetComponentInParent<DeathTrash>();
+        var deathTrash = collision.rigidbody.GetComponent<DeathTrash>();
         if (deathTrash != null)
-            HandleCollisionWithDeathTrash();
+            HandleCollisionWithDeathTrash(collision);
     }
 
     void OnDisable() => I = null;
@@ -106,13 +106,19 @@ public class Player : MonoBehaviour
         _prevRotInput = rotInput;
     }
 
-    void HandleCollisionWithDeathTrash()
+    void HandleCollisionWithDeathTrash(Collision2D collision)
     {
         if (_destroyed)
             return;
         _destroyed = true;
 
         SoundController.Play("game-over");
+
+        Instantiate(
+            Resources.Load<GameObject>("Effects/Boom1"),
+            collision.contacts[0].point,
+            Quaternion.identity
+        );
 
         new Async(this)
             .Lerp(
