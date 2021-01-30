@@ -3,16 +3,22 @@ using UnityEngine;
 public class SpawnController : MonoBehaviour
 {
     const float SPAWN_RETRY_DELAY = 0.5f;
+    const float MINMAX_Y_RANGE = 4f;
+    const float X_SPAWN_OFFSET = 25f;
+    const float MAX_SPAWN_X_VELOCITY = 0.75f;
+    const float MINMAX_SPAWN_Y_VELOCITY = 0.2f;
+    const float MINMAX_SPAWN_TORQUE = 0.75f;
 
     float x => Time.time - _startTime;
 
     float _startTime;
-    float[] _nextSpawnAt = new float[3]; // Size of `SpawnType` enum
+    float[] _nextSpawnAt;
 
     void OnEnable()
     {
         _startTime = Time.time;
 
+        _nextSpawnAt = new float[6]; // Size of `SpawnType` enum
         for (var i = 0; i != _nextSpawnAt.Length; ++i)
             _nextSpawnAt[i] = 0;
         
@@ -25,9 +31,12 @@ public class SpawnController : MonoBehaviour
 
     void FixedUpdate()
     {
-        MaybeSpawn(SpawnType.DeathTrash);
+        MaybeSpawn(SpawnType.TrashDeath);
         MaybeSpawn(SpawnType.Turret);
         MaybeSpawn(SpawnType.TNT);
+        MaybeSpawn(SpawnType.TrashSmall);
+        MaybeSpawn(SpawnType.TrashMedium);
+        MaybeSpawn(SpawnType.TrashLarge);
     }
 
     void OnDisable()
@@ -46,46 +55,101 @@ public class SpawnController : MonoBehaviour
         
         float nextSpawnDelay;
 
-        if (type == SpawnType.DeathTrash)
+        if (type == SpawnType.TrashDeath)
         {
-            nextSpawnDelay = DeathTrashSpawnDelay(x);
-            DeathTrash.Spawn();
+            nextSpawnDelay = Mathf.Max(
+                0.5f,
+                -Mathf.Log((x / 3600) + 0.1f) * 2
+            );
+
+            var resourceLoc = GameConfig.TrashResources["Death"].PickRandom();
+            var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
+            Spawn(prefabToSpawn);
         }
         else if (type == SpawnType.Turret)
         {
-            nextSpawnDelay = TurretSpawnDelay(x);
-            Turret.Spawn();
+            nextSpawnDelay = Mathf.Max(
+                0.3f,
+                -Mathf.Log((x / 1200) + 0.1f) * 2
+            );
+
+            var prefabToSpawn = Resources.Load<GameObject>("Content/Turret");
+            Spawn(prefabToSpawn);
+        }
+        else if (type == SpawnType.TNT)
+        {
+            nextSpawnDelay = TNTSpawnDelay(x);
+
+            var prefabToSpawn = Resources.Load<GameObject>("Content/TNT");
+            var obj = Spawn(prefabToSpawn);
+            ApplyInitialMomentum(obj, 1.2f);
+        } else if (type == SpawnType.TrashSmall)
+        {
+            nextSpawnDelay = 1f;
+
+            var resourceLoc = GameConfig.TrashResources["Small"].PickRandom();
+            var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
+            var obj = Spawn(prefabToSpawn);
+            ApplyInitialMomentum(obj, 1.2f);
+        }
+        else if (type == SpawnType.TrashMedium)
+        {
+            nextSpawnDelay = 4f;
+
+            var resourceLoc = GameConfig.TrashResources["Medium"].PickRandom();
+            var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
+            var obj = Spawn(prefabToSpawn);
+            ApplyInitialMomentum(obj, 1f);
         }
         else
         {
-            nextSpawnDelay = TNTSpawnDelay(x);
-            TNT.Spawn();
+            nextSpawnDelay = 7f;
+
+            var resourceLoc = GameConfig.TrashResources["Large"].PickRandom();
+            var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
+            var obj = Spawn(prefabToSpawn);
+            ApplyInitialMomentum(obj, 0.4f);
         }
 
         _nextSpawnAt[iType] = Time.time + nextSpawnDelay;
     }
 
-    float DeathTrashSpawnDelay(float x) =>
-        Mathf.Max(
-            0.5f,
-            -Mathf.Log((x / 3600) + 0.1f) * 2
-        );
-    
-    float TurretSpawnDelay(float x) =>
-        Mathf.Max(
-            0.3f,
-            -Mathf.Log((x / 2000) + 0.1f) * 2
-        );
-
     float TNTSpawnDelay(float x) =>
         Mathf.Max(
             0.5f,
-            -Mathf.Log((x / 2000) + 0.1f) * 8
+            -Mathf.Log((x / 2000) + 0.1f) * 4
         );
+
+    GameObject Spawn(GameObject prefabToSpawn)
+    {
+        var xPos = Player.I.transform.position.x + X_SPAWN_OFFSET;
+        var yPos = UnityEngine.Random.Range(-MINMAX_Y_RANGE, MINMAX_Y_RANGE);
+        var spawnPos = new Vector3(xPos, yPos, 0);
+
+        var spawnRot = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f));
+
+        return Instantiate(
+            prefabToSpawn,
+            spawnPos,
+            spawnRot
+        );
+    }
+
+    void ApplyInitialMomentum(GameObject spawnedObj, float magnitude)
+    {
+        var rb = spawnedObj.GetComponent<Rigidbody2D>();
+        var sticky = spawnedObj.GetComponent<Sticky>();
+
+        rb.velocity = new Vector2(
+            Random.Range(-MAX_SPAWN_X_VELOCITY, 0f) * magnitude,
+            Random.Range(-MINMAX_SPAWN_Y_VELOCITY, MINMAX_SPAWN_Y_VELOCITY)
+        );
+        sticky.torque = Random.Range(-MINMAX_SPAWN_TORQUE, MINMAX_SPAWN_TORQUE) * magnitude;
+    }
     
     void HandleDeathTrashSpawnFailed()
     {
-        var iType = (int)SpawnType.DeathTrash;
+        var iType = (int)SpawnType.TrashDeath;
         _nextSpawnAt[iType] = Time.time + SPAWN_RETRY_DELAY;
     }
     
@@ -97,8 +161,11 @@ public class SpawnController : MonoBehaviour
     
     enum SpawnType
     {
-        DeathTrash = 0,
+        TrashDeath = 0,
         Turret = 1,
-        TNT = 2
+        TNT = 2,
+        TrashSmall = 3,
+        TrashMedium = 4,
+        TrashLarge = 5
     }
 }

@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   _auto:
-    deathTrashResourceNames:
-    - Content/DeathTrash/DeathTrash1
+    trashResources:
+    - type: Death
+      path: Content/Trash/Death/TrashDeath1
+    - type: Medium
+      path: Content/Trash/Medium/TrashMedium1
+    - type: Small
+      path: Content/Trash/Small/TrashSmall1

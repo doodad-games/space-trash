@@ -42,7 +42,31 @@ public class GameConfig : ScriptableObject
 
     }
     
-    public static IReadOnlyList<string> DeathTrashResourceNames => _i._auto.deathTrashResourceNames;
+    public static IReadOnlyDictionary<string, IReadOnlyList<string>> TrashResources
+    {
+        get
+        {
+            if (_sc.trashResources == null)
+            {
+                var dict = new Dictionary<string, List<string>>();
+                foreach (var resource in _i._auto.trashResources)
+                {
+                    if (!dict.ContainsKey(resource.type))
+                        dict[resource.type] = new List<string>();
+                    dict[resource.type].Add(resource.path);
+                }
+
+                var roDict = new Dictionary<string, IReadOnlyList<string>>();
+                foreach (var pair in dict)
+                    roDict[pair.Key] = pair.Value;
+
+                _sc.trashResources = roDict;
+            }
+
+            return _sc.trashResources;
+        }
+    }
+
     public static int NewID => _sc.id++;
 
 #pragma warning disable CS0649
@@ -54,12 +78,20 @@ public class GameConfig : ScriptableObject
         public GameConfig i;
         public int spawnCheckLayer = -1;
         public int id;
+        public Dictionary<string, IReadOnlyList<string>> trashResources;
     }
 
     [Serializable]
     struct AutoPopulated
     {
-        public string[] deathTrashResourceNames;
+        public TrashResource[] trashResources;
+
+        [Serializable]
+        public struct TrashResource
+        {
+            public string type;
+            public string path;
+        }
     }
 
 #if UNITY_EDITOR
@@ -79,17 +111,25 @@ public class GameConfig : ScriptableObject
 
     static void UpdateDeathTrashResourceNames(GameConfig config)
     {
-        var resourcePathReg = new Regex("Assets/Resources/(Content/DeathTrash/.*)\\.prefab");
+        var resourcePathReg = new Regex("Assets/Resources/(Content/Trash/([^/]+)/.*)\\.prefab");
 
-        config._auto.deathTrashResourceNames = 
-            AssetDatabase.FindAssets("t:Prefab", new string[] { "Assets/Resources/Content/DeathTrash" })
+        config._auto.trashResources = 
+            AssetDatabase.FindAssets("t:Prefab", new string[] { "Assets/Resources/Content/Trash" })
                 .Select(AssetDatabase.GUIDToAssetPath)
-                .Select(_ => resourcePathReg.Match(_).Groups[1].Value)
+                .Select(_ =>
+                {
+                    var regMatch = resourcePathReg.Match(_);
+                    return new AutoPopulated.TrashResource
+                    {
+                        type = regMatch.Groups[2].Value,
+                        path = regMatch.Groups[1].Value
+                    };
+                })
                 .ToArray();
         
         Debug.Log(string.Format(
-            "Found {0} death trash in Assets/Resources/Content/DeathTrash",
-            config._auto.deathTrashResourceNames.Length
+            "Found {0} trash in Assets/Resources/Content/Trash",
+            config._auto.trashResources.Length
         ));
     }
 #endif

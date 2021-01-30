@@ -99,29 +99,41 @@ public class Sticky : MonoBehaviour
     {
         var otherRoot = otherSticky._root;
 
-        if (otherRoot._player != null)
+        // Abort for same cluster
+        if (otherRoot == _root)
             return;
         
-        var myVel = _root._rb.velocity.sqrMagnitude;
-        var otherVel = otherRoot._root._rb.velocity.sqrMagnitude;
+        // Abort if lower priority
+        {
+            // Player is always priority
+            if (otherRoot._player != null)
+                return;
+            if (_root._player == null)
+            {
+                // Faster or older takes is priority
+                var myVel = _root._rb.velocity.sqrMagnitude;
+                var otherVel = otherRoot._rb.velocity.sqrMagnitude;
 
-        if (
-            myVel < otherVel ||
-            (
-                myVel == otherVel &&
-                _id > otherRoot._id
-            )
-        ) return;
+                if (
+                    myVel < otherVel ||
+                    (
+                        myVel == otherVel &&
+                        _id > otherRoot._id
+                    )
+                ) return;
+            }
+        }
 
-        _directChildren.Add(otherRoot);
-        otherRoot._root = _root;
-        otherRoot._parent = this;
-        otherRoot.transform.parent = transform;
-        otherRoot._stickSound.Play();
-        
+        // Remove other cluster's velocity
         var otherRB = otherRoot.GetComponent<Rigidbody2D>();
         otherRB.velocity = Vector2.zero;
         otherRoot.torque = 0;
+
+        var visitedSet = new HashSet<Sticky>();
+        visitedSet.Add(this);
+        ReTopo(visitedSet, otherSticky);
+
+        otherSticky._stickSound.Play();
     }
 
     void DestroyFromCollision(Collision2D collision) =>
@@ -154,7 +166,7 @@ public class Sticky : MonoBehaviour
             if (child == null)
                 continue;
 
-            child._root = child;
+            child.RecursivelyUpdateRoot(child);
             child.transform.parent = null;
             child.torque = _root.torque;
 
@@ -175,5 +187,34 @@ public class Sticky : MonoBehaviour
         _isInChainReaction = true;
         yield return new WaitForSeconds(CHAIN_REACTION_STEP_DELAY);
         DoTheBoom(transform.position);
+    }
+
+    void ReTopo(HashSet<Sticky> visitedSet, Sticky newChild)
+    {
+        if (visitedSet.Contains(newChild))
+            return;
+        visitedSet.Add(newChild);
+
+        var toVisit = new HashSet<Sticky>(newChild._directChildren);
+        if (newChild._parent != null)
+            toVisit.Add(newChild._parent);
+
+        newChild._root = _root;
+
+        newChild._parent = this;
+        _directChildren.Add(newChild);
+
+        newChild.transform.parent = transform;
+
+        newChild._directChildren.Clear();
+        foreach (var child in toVisit)
+            newChild.ReTopo(visitedSet, child);
+    }
+
+    void RecursivelyUpdateRoot(Sticky newRoot)
+    {
+        _root = newRoot;
+        foreach (var child in _directChildren)
+            child.RecursivelyUpdateRoot(newRoot);
     }
 }
