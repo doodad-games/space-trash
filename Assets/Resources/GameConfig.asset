@@ -16,7 +16,10 @@ MonoBehaviour:
     trashResources:
     - type: Death
       path: Content/Trash/Death/TrashDeath1
+    - type: Large
+      path: Content/Trash/Large/TrashLarge1
     - type: Medium
       path: Content/Trash/Medium/TrashMedium1
     - type: Small
       path: Content/Trash/Small/TrashSmall1
+  _masterMixer: {fileID: 24100000, guid: 87b9cf424d03e594d9a69e1a033e04e9, type: 2}

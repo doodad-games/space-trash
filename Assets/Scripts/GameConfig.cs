@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 #if UNITY_EDITOR
 using System.Linq;
@@ -11,6 +12,9 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "Config/GameConfig", fileName = "GameConfig")]
 public class GameConfig : ScriptableObject
 {
+    const float MUSIC_VOLUME_ON = -10f;
+    const float MUSIC_VOLUME_OFF = -80f;
+
     static StaticCache _sc = new StaticCache();
 
     static GameConfig _i
@@ -39,7 +43,25 @@ public class GameConfig : ScriptableObject
                 _sc.spawnCheckLayer = LayerMask.NameToLayer("DeathTrashSpawnCheck");
             return _sc.spawnCheckLayer;
         }
+    }
 
+    public static void FadeMusicVolume(bool on)
+    {
+        float initialVolume;
+        GameConfig.Mixer.GetFloat("MusicVolume", out initialVolume);
+
+        var target = on ? MUSIC_VOLUME_ON : MUSIC_VOLUME_OFF;
+        var targetChange = target - initialVolume;
+
+        new Async()
+            .Lerp(
+                1f,
+                (step) => GameConfig.Mixer.SetFloat(
+                    "MusicVolume",
+                    initialVolume + targetChange * step
+                ),
+                TimeMode.Unscaled
+            );
     }
     
     public static IReadOnlyDictionary<string, IReadOnlyList<string>> TrashResources
@@ -68,9 +90,11 @@ public class GameConfig : ScriptableObject
     }
 
     public static int NewID => _sc.id++;
+    public static AudioMixer Mixer => _i._masterMixer;
 
 #pragma warning disable CS0649
     [SerializeField] AutoPopulated _auto;
+    [SerializeField] AudioMixer _masterMixer;
 #pragma warning restore CS0649
 
     class StaticCache

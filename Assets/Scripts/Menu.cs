@@ -23,6 +23,12 @@ public class Menu : MonoBehaviour
     public void ActuallyPlay() =>
         SceneManager.LoadScene("Gameplay");
 
+    public void FadeInMusic() =>
+        GameConfig.FadeMusicVolume(true);
+
+    public void FadeOutMusic() =>
+        GameConfig.FadeMusicVolume(false);
+
     public void ActuallyExit()
     {
 #if UNITY_EDITOR

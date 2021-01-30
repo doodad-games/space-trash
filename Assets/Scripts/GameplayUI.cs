@@ -13,6 +13,12 @@ public class GameplayUI : MonoBehaviour
     void OnDisable() =>
         Player.onDestroyed -= HandlePlayerDestroyed;
 
+    public void FadeInMusic() =>
+        GameConfig.FadeMusicVolume(true);
+    
+    public void FadeOutMusic() =>
+        GameConfig.FadeMusicVolume(false);
+
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
