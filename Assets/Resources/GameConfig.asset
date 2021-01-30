@@ -16,10 +16,76 @@ MonoBehaviour:
     resourceBucketItems:
     - type: EffectVisualsPlayer
       path: Content/Buckets/EffectVisualsPlayer/VisualPlayer1
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer2
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer3
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer4
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer5
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer6
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer7
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer8
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer9
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer10
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer11
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer12
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer13
     - type: EffectVisualsSticky
-      path: Content/Buckets/EffectVisualsSticky/VisualSticky1
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky4
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky5
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky6
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky7
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky8
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky9
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky10
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky11
     - type: EffectVisualsTNT
       path: Content/Buckets/EffectVisualsTNT/VisualTNT1
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT2
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT3
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT5
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT6
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT7
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT9
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT10
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT11
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT12
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT13
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT16
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT17
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT18
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT20
     - type: TrashDeath
       path: Content/Buckets/TrashDeath/TrashDeath1
     - type: TrashLarge

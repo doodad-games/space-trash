@@ -59,7 +59,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = Mathf.Max(
                 0.5f,
-                -Mathf.Log((x / 3600) + 0.1f) * 2
+                -Mathf.Log((x / 800) + 0.1f) * 2
             );
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashDeath"].PickRandom();
@@ -70,7 +70,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = Mathf.Max(
                 0.3f,
-                -Mathf.Log((x / 1200) + 0.1f) * 2
+                -Mathf.Log((x / 400) + 0.1f) * 2
             );
 
             var prefabToSpawn = Resources.Load<GameObject>("Content/Turret");
@@ -94,7 +94,7 @@ public class SpawnController : MonoBehaviour
         }
         else if (type == SpawnType.TrashMedium)
         {
-            nextSpawnDelay = 4f;
+            nextSpawnDelay = 3f;
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashMedium"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
@@ -103,7 +103,7 @@ public class SpawnController : MonoBehaviour
         }
         else
         {
-            nextSpawnDelay = 7f;
+            nextSpawnDelay = 5f;
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashLarge"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
@@ -117,7 +117,7 @@ public class SpawnController : MonoBehaviour
     float TNTSpawnDelay(float x) =>
         Mathf.Max(
             0.5f,
-            -Mathf.Log((x / 2000) + 0.1f) * 4
+            -Mathf.Log((x / 400) + 0.1f) * 4
         );
 
     GameObject Spawn(GameObject prefabToSpawn)

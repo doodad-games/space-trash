@@ -233,8 +233,11 @@ public class Sticky : MonoBehaviour
         {
             type = "TNT";
 
-            if (_root._isPlayer)
-                numVisuals = 1;
+            if (
+                _root._isPlayer ||
+                _parent != null ||
+                _directChildren.Count != 0
+            ) numVisuals = 1;
             else
                 numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
         }
@@ -242,7 +245,9 @@ public class Sticky : MonoBehaviour
         {
             type = "Sticky";
 
-            if (_root._isPlayer)
+            if (_isInChainReaction)
+                numVisuals = 1;
+            else if (_root._isPlayer)
                 numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
             else
                 numVisuals = UnityEngine.Random.value > 0.6f ? 1 : 0;
@@ -271,9 +276,15 @@ public class Sticky : MonoBehaviour
 
             var spawnPoint = boomPoint;
             if (i != 0)
-                spawnPoint += (Vector3)UnityEngine.Random.insideUnitCircle;
+                spawnPoint +=
+                    (Vector3)UnityEngine.Random.insideUnitCircle * 2;
 
-            Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
+            new Async(Player.I)
+                .Wait(0.2f * i)
+                .Then(() =>
+                {
+                    Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
+                });
         }
     }
 }
