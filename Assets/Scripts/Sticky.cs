@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Sticky : MonoBehaviour
 {
     const float POST_DISCONNECTION_X_VELOCITY_STEP = 0.01f;
+    const float CHAIN_REACTION_STEP_DELAY = 0.25f;
 
     public event Action onDestroyed;
 
@@ -18,6 +20,7 @@ public class Sticky : MonoBehaviour
     Player _player;
     Rigidbody2D _rb;
 
+    bool _isInChainReaction;
     Sticky _root;
     Sticky _parent;
     List<Sticky> _directChildren;
@@ -27,6 +30,9 @@ public class Sticky : MonoBehaviour
     {
         _player = GetComponent<Player>();
         _rb = GetComponent<Rigidbody2D>();
+
+        var tnt = GetComponent<TNT>();
+        _isInChainReaction = tnt != null;
     }
     
     void OnEnable()
@@ -51,11 +57,17 @@ public class Sticky : MonoBehaviour
             return;
         }
 
-        var deathTrash = collision.collider.GetComponent<DeathTrash>();
-        if (deathTrash != null)
+        if (
+            _player != null ||
+            _root.gameObject == Player.I.gameObject
+        )
         {
-            DestroyFromCollision(collision);
-            return;
+            var deathTrash = collision.collider.GetComponent<DeathTrash>();
+            if (deathTrash != null)
+            {
+                DestroyFromCollision(collision);
+                return;
+            }
         }
 
         var bullet = collision.collider.GetComponent<TurretBullet>();
@@ -85,29 +97,44 @@ public class Sticky : MonoBehaviour
 
     void HandleStickyCollision(Sticky otherSticky)
     {
-        if (otherSticky._id < _id)
-            return;
+        var otherRoot = otherSticky._root;
 
-        _directChildren.Add(otherSticky);
-        otherSticky._root = _root;
-        otherSticky._parent = this;
-        otherSticky.transform.parent = transform;
-        otherSticky._stickSound.Play();
+        if (otherRoot._player != null)
+            return;
         
-        var otherRB = otherSticky.GetComponent<Rigidbody2D>();
+        var myVel = _root._rb.velocity.sqrMagnitude;
+        var otherVel = otherRoot._root._rb.velocity.sqrMagnitude;
+
+        if (
+            myVel < otherVel ||
+            (
+                myVel == otherVel &&
+                _id > otherRoot._id
+            )
+        ) return;
+
+        _directChildren.Add(otherRoot);
+        otherRoot._root = _root;
+        otherRoot._parent = this;
+        otherRoot.transform.parent = transform;
+        otherRoot._stickSound.Play();
+        
+        var otherRB = otherRoot.GetComponent<Rigidbody2D>();
         otherRB.velocity = Vector2.zero;
-        otherSticky.torque = 0;
+        otherRoot.torque = 0;
     }
 
-    void DestroyFromCollision(Collision2D collision)
+    void DestroyFromCollision(Collision2D collision) =>
+        DoTheBoom(collision.contacts[0].point);
+    
+    void DoTheBoom(Vector3 boomPoint)
     {
         if (_destroyed)
             return;
         _destroyed = true;
 
         var boomPrefab = Resources.Load<GameObject>("Effects/Boom1");
-        var effectPoint = collision.contacts[0].point;
-        Instantiate(boomPrefab, effectPoint, Quaternion.identity);
+        Instantiate(boomPrefab, boomPoint, Quaternion.identity);
         
         onDestroyed?.Invoke();
 
@@ -115,18 +142,38 @@ public class Sticky : MonoBehaviour
             return;
         
         if (_parent != null)
+        {
             _parent._directChildren.Remove(this);
+
+            if (_isInChainReaction)
+                _parent.MarkForChainReaction();
+        }
 
         foreach (var child in _directChildren)
         {
+            if (child == null)
+                continue;
+
             child._root = child;
             child.transform.parent = null;
             child.torque = _root.torque;
 
             var otherRB = child.GetComponent<Rigidbody2D>();
             otherRB.velocity = _root._rb.velocity;
+
+            if (_isInChainReaction)
+                child.MarkForChainReaction();
         }
 
         Destroy(gameObject);
+    }
+
+    void MarkForChainReaction() =>
+        StartCoroutine(MarkForChainReactionCo());
+    IEnumerator MarkForChainReactionCo()
+    {
+        _isInChainReaction = true;
+        yield return new WaitForSeconds(CHAIN_REACTION_STEP_DELAY);
+        DoTheBoom(transform.position);
     }
 }

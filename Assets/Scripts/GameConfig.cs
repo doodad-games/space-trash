@@ -11,7 +11,7 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "Config/GameConfig", fileName = "GameConfig")]
 public class GameConfig : ScriptableObject
 {
-    static StaticCache _sc;
+    static StaticCache _sc = new StaticCache();
 
     static GameConfig _i
     {

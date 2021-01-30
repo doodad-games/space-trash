@@ -55,7 +55,7 @@ public class DeathTrash : MonoBehaviour
                     otherTurret == null ||
                     otherTurret.Stable
                 ) return;
-                
+
                 Destroy(otherTurret.gameObject);
                 onTurretSpawnPrevented?.Invoke();
             }
