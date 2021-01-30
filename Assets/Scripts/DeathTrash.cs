@@ -27,11 +27,12 @@ public class DeathTrash : MonoBehaviour
         );
     }
 
-    int _createdAt;
+    int _id;
+
     int _spawnCheckLayer;
 
     void OnEnable() =>
-        _createdAt = Time.frameCount;
+        _id = GameConfig.NewID;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -40,10 +41,8 @@ public class DeathTrash : MonoBehaviour
             var otherDeathTrash = other.GetComponentInParent<DeathTrash>();
             if (otherDeathTrash != null)
             {
-                if (otherDeathTrash._createdAt >= _createdAt)
+                if (otherDeathTrash._id > _id)
                     return;
-                if (otherDeathTrash._createdAt == _createdAt)
-                    Debug.LogWarning("Multiple death trash spawned on same frame :O");
 
                 Destroy(otherDeathTrash.gameObject);
 
@@ -52,8 +51,10 @@ public class DeathTrash : MonoBehaviour
             else
             {
                 var otherTurret = other.GetComponentInParent<Turret>();
-                if (otherTurret == null)
-                    return;
+                if (
+                    otherTurret == null ||
+                    otherTurret.Stable
+                ) return;
                 
                 Destroy(otherTurret.gameObject);
                 onTurretSpawnPrevented?.Invoke();

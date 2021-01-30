@@ -39,6 +39,7 @@ public class GameConfig : ScriptableObject
     }
     
     public static IReadOnlyList<string> DeathTrashResourceNames => _i._auto.deathTrashResourceNames;
+    public static int NewID => _sc.id++;
 
 #pragma warning disable CS0649
     [SerializeField] AutoPopulated _auto;
@@ -48,6 +49,7 @@ public class GameConfig : ScriptableObject
     {
         public GameConfig i;
         public int spawnCheckLayer = -1;
+        public int id;
     }
 
     [Serializable]

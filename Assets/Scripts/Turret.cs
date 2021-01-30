@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -22,25 +23,30 @@ public class Turret : MonoBehaviour
         );
     }
 
-    public int CreatedAt => _createdAt;
+    public bool Stable => _stable;
 
 #pragma warning disable CS0649
     [SerializeField] Transform _bulletSpawnPoint;
 #pragma warning restore CS0649
 
-    int _createdAt;
+    bool _stable;
 
-    void OnEnable() =>
-        _createdAt = Time.frameCount;
+    IEnumerator Start()
+    {
+        yield return new WaitForEndOfFrame();
+        _stable = true;
+    }
 
     public void SpawnBullet()
     {
         var spawnPos = _bulletSpawnPoint.position;
 
         var prefab = Resources.Load<GameObject>("Content/TurretBullet");
-        Instantiate(prefab, spawnPos, _bulletSpawnPoint.rotation);
+        var bulletObj = Instantiate(prefab, spawnPos, _bulletSpawnPoint.rotation);
+        bulletObj.GetComponent<TurretBullet>()
+            .Init(this);
 
-        var spawnSoundPrefab = Resources.Load<GameObject>("Content/TurretBulletSpawnSound");
+        var spawnSoundPrefab = Resources.Load<GameObject>("Effects/TurretBulletSpawnSound");
         Instantiate(spawnSoundPrefab, spawnPos, Quaternion.identity);
     }
 }

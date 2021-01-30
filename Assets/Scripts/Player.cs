@@ -17,22 +17,26 @@ public class Player : MonoBehaviour
     public static Player I { get; private set; }
 
     Rigidbody2D _rb;
+    Sticky _sticky;
 
-    bool _destroyed;
-    float _torque;
     int _prevVertInput;
     int _prevRotInput;
 
-    void Awake() => _rb = GetComponent<Rigidbody2D>();
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _sticky = GetComponent<Sticky>();
+    }
 
     void OnEnable()
     {
         I = this;
-        _destroyed = false;
-        _torque = 2f;
+        _sticky.torque = 2f;
         _prevVertInput = _prevRotInput = 0;
 
         _rb.velocity = new Vector2(HORIZONTAL_VELOCITY, 0);
+
+        _sticky.onDestroyed += HandleStickyDestroyed;
     }
 
     void FixedUpdate()
@@ -42,24 +46,12 @@ public class Player : MonoBehaviour
         ApplyRotationalInput();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnDisable() 
     {
-        var deathTrash = collision.collider.GetComponentInParent<DeathTrash>();
-        if (deathTrash != null)
-        {
-            DestroyFromCollision(collision);
-            return;
-        }
+        I = null;
 
-        var bullet = collision.collider.GetComponentInParent<TurretBullet>();
-        if (bullet != null)
-        {
-            DestroyFromCollision(collision);
-            return;
-        }
+        _sticky.onDestroyed -= HandleStickyDestroyed;
     }
-
-    void OnDisable() => I = null;
 
     void ApplyUpDownInput()
     {
@@ -109,29 +101,18 @@ public class Player : MonoBehaviour
                 SoundController.Play("thrusters");
 
             var step = TORQUE_INC_STEP * rotInput;
-            if (Mathf.Sign(step) != Mathf.Sign(_torque))
+            if (Mathf.Sign(step) != Mathf.Sign(_sticky.torque))
                 step *= TORQUE_OTHER_DIR_MULTIPLIER;
 
-            _torque += step;
+            _sticky.torque += step;
         }
 
-        _rb.rotation += _torque;
         _prevRotInput = rotInput;
     }
 
-    void DestroyFromCollision(Collision2D collision)
+    void HandleStickyDestroyed()
     {
-        if (_destroyed)
-            return;
-        _destroyed = true;
-
         SoundController.Play("game-over");
-
-        Instantiate(
-            Resources.Load<GameObject>("Effects/Boom1"),
-            collision.contacts[0].point,
-            Quaternion.identity
-        );
 
         new Async(this)
             .Lerp(
@@ -139,7 +120,7 @@ public class Player : MonoBehaviour
                 (step) => Time.timeScale = step,
                 TimeMode.Unscaled
             );
-        
+
         onDestroyed?.Invoke();
     }
 }
