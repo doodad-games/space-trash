@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TurretBullet : MonoBehaviour
 {
-    const float SPEED = 0.06f;
+    const float SPEED = 0.09f;
 
     public GameObject Owner
     {

@@ -44,35 +44,41 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 1f23f71753dcffc44a5214ec51b73d8f, type: 3}
-    totalSpriteSurfaceArea: 720896
+    totalSpriteSurfaceArea: 917504
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 4e11fd0148269ab4c909f1324b0ffe75, type: 3}
   - {fileID: 21300000, guid: 4ba54931485dc50419e44b25a4a98e10, type: 3}
   - {fileID: 21300000, guid: 226bf1c14f0fbb74fb1f77d5daf0f64a, type: 3}
   - {fileID: 21300000, guid: 8c458ed1142d5aa4c9f8afa945549d4d, type: 3}
   - {fileID: 21300000, guid: 8f529cb4d6515af4aaa85ae9138d9da8, type: 3}
   - {fileID: 21300000, guid: 0283f015dc756b547a7dcba7494f44cd, type: 3}
   - {fileID: 21300000, guid: d064c4b7601814e43b46163680d7d3e1, type: 3}
+  - {fileID: 21300000, guid: 9d5eb09a9d7ddd74c8950d8dabb2754a, type: 3}
   - {fileID: 21300000, guid: e8e52c7b2b6ae094d90ec4543ab19781, type: 3}
   - {fileID: 21300000, guid: 37a9afdc9af10d949be12d9ab4225506, type: 3}
   - {fileID: 21300000, guid: 835823ecf90169e4b966dc474c01b08a, type: 3}
   - {fileID: 21300000, guid: 4004d03df1b485c43a14f02e2656b7e8, type: 3}
   - {fileID: 21300000, guid: c497e87dfb2cf0045ac34f64ebdcf1e1, type: 3}
+  - {fileID: 21300000, guid: f8dfed8ece6c6c84699a282203c93b8b, type: 3}
   m_PackedSpriteNamesToIndex:
+  - turret-charge
   - explosion-text
   - tutorial-w
   - white-square
   - tutorial-d
   - tutorial-s
   - tnt
+  - turret-bullet
   - tutorial-down
   - tutorial-right
   - tutorial-up
   - tutorial-left
   - tutorial-a
+  - turret
   m_RenderDataMap: {}
   m_Tag: Atlas_Small
   m_IsVariant: 0

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 206528004136283684}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 2774863453774692266}
   m_RootOrder: 1
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 37a9afdc9af10d949be12d9ab4225506, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8dfed8ece6c6c84699a282203c93b8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -105,13 +105,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636550044489131600}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.137, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2774863453774692266}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1850603838298211197
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ Transform:
   m_GameObject: {fileID: 1850603838298211197}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 2774863453774692266}
   m_RootOrder: 2
@@ -182,9 +182,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 8c458ed1142d5aa4c9f8afa945549d4d, type: 3}
-  m_Color: {r: 0.9960785, g: 0.98823535, b: 0, a: 1}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 4e11fd0148269ab4c909f1324b0ffe75, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -194,8 +194,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!61 &1305796572530422080
-BoxCollider2D:
+--- !u!60 &2859711530023781973
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -217,9 +217,18 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.45}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.18113568, y: 0.14324224}
+      - {x: 0.0018605143, y: 0.1608608}
+      - {x: -0.21462855, y: 0.13324003}
+      - {x: -0.3145442, y: 0.07108161}
+      - {x: -0.2663229, y: -0.07957809}
+      - {x: -0.15310389, y: -0.17389861}
+      - {x: 0.0021957308, y: -0.21082477}
+      - {x: 0.15901476, y: -0.17190637}
+      - {x: 0.27215827, y: -0.069364026}
+      - {x: 0.31135553, y: 0.068688765}
 --- !u!95 &1525651001221544342
 Animator:
   serializedVersion: 3
@@ -252,6 +261,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpawnPoint: {fileID: 8087190570640139355}
+--- !u!210 &2714409942323943270
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561916857426505812}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5690634642310878119
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4228754437149516019}
-  - component: {fileID: 8343275836278523166}
+  - component: {fileID: 3433568081143475912}
   m_Layer: 7
   m_Name: SpawnCheckCollider
   m_TagString: Untagged
@@ -283,8 +303,8 @@ Transform:
   m_Father: {fileID: 2774863453774692266}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8343275836278523166
-BoxCollider2D:
+--- !u!60 &3433568081143475912
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -306,9 +326,14 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.0005982369, y: 0.20882834}
+      - {x: -0.3661049, y: 0.12566623}
+      - {x: -0.25661278, y: -0.18147244}
+      - {x: 0.0021957308, y: -0.26762843}
+      - {x: 0.27846974, y: -0.15772527}
+      - {x: 0.3605854, y: 0.1229678}
 --- !u!1001 &5523547786299772366
 PrefabInstance:
   m_ObjectHideFlags: 0
