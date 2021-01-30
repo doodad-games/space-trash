@@ -7,13 +7,14 @@ public class SpawnController : MonoBehaviour
     float x => Time.time - _startTime;
 
     float _startTime;
-    float _nextDeathTrashSpawnAt;
-    float _nextTurretSpawnAt;
+    float[] _nextSpawnAt = new float[2]; // Size of `SpawnType` enum
 
     void OnEnable()
     {
         _startTime = Time.time;
-        _nextDeathTrashSpawnAt = 0f;
+
+        for (var i = 0; i != _nextSpawnAt.Length; ++i)
+            _nextSpawnAt[i] = 0;
 
         DeathTrash.onSpawnFailed += HandleDeathTrashSpawnFailed;
         DeathTrash.onTurretSpawnPrevented += HandleTurretSpawnFailed;
@@ -21,8 +22,8 @@ public class SpawnController : MonoBehaviour
 
     void FixedUpdate()
     {
-        MaybeSpawnDeathTrash();
-        MaybeSpawnTurret();
+        MaybeSpawn(SpawnType.DeathTrash);
+        MaybeSpawn(SpawnType.Turret);
     }
 
     void OnDisable()
@@ -31,15 +32,28 @@ public class SpawnController : MonoBehaviour
         DeathTrash.onTurretSpawnPrevented -= HandleTurretSpawnFailed;
     }
 
-    void MaybeSpawnDeathTrash()
+    void MaybeSpawn(SpawnType type)
     {
-        if (Time.time < _nextDeathTrashSpawnAt)
+        var iType = (int)type;
+        var nextSpawnAt = _nextSpawnAt[iType];
+
+        if (Time.time < nextSpawnAt)
             return;
         
-        var nextSpawnDelay = DeathTrashSpawnDelay(x);
-        _nextDeathTrashSpawnAt = Time.time + nextSpawnDelay;
+        float nextSpawnDelay;
 
-        DeathTrash.Spawn();
+        if (type == SpawnType.DeathTrash)
+        {
+            nextSpawnDelay = DeathTrashSpawnDelay(x);
+            DeathTrash.Spawn();
+        }
+        else
+        {
+            nextSpawnDelay = TurretSpawnDelay(x);
+            Turret.Spawn();
+        }
+
+        _nextSpawnAt[iType] = Time.time + nextSpawnDelay;
     }
 
     float DeathTrashSpawnDelay(float x) =>
@@ -48,26 +62,27 @@ public class SpawnController : MonoBehaviour
             -Mathf.Log((x / 3600) + 0.1f) * 2
         );
     
-    void HandleDeathTrashSpawnFailed() =>
-        _nextDeathTrashSpawnAt = Time.time + SPAWN_RETRY_DELAY;
-    
-    void MaybeSpawnTurret()
+    void HandleDeathTrashSpawnFailed()
     {
-        if (Time.time < _nextTurretSpawnAt)
-            return;
-        
-        var nextSpawnDelay = TurretSpawnDelay(x);
-        _nextTurretSpawnAt = Time.time + nextSpawnDelay;
-
-        Turret.Spawn();
+        var iType = (int)SpawnType.DeathTrash;
+        _nextSpawnAt[iType] = Time.time + SPAWN_RETRY_DELAY;
     }
-
+    
     float TurretSpawnDelay(float x) =>
         Mathf.Max(
             0.3f,
             -Mathf.Log((x / 2000) + 0.1f) * 2
         );
     
-    void HandleTurretSpawnFailed() =>
-        _nextTurretSpawnAt = Time.time + SPAWN_RETRY_DELAY;
+    void HandleTurretSpawnFailed()
+    {
+        var iType = (int)SpawnType.Turret;
+        _nextSpawnAt[iType] = Time.time + SPAWN_RETRY_DELAY;
+    }
+    
+    enum SpawnType
+    {
+        DeathTrash = 0,
+        Turret = 1
+    }
 }

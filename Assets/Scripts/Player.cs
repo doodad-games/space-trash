@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
 
     void HandleStickyDestroyed()
     {
-        SoundController.Play("game-over");
+        SoundController.Play("player-boom");
 
         new Async(this)
             .Lerp(

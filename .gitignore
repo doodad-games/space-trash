@@ -17,6 +17,7 @@ sysinfo.txt
 /*.csproj
 /*.sln
 /UserSettings
+/Recordings
 
 # To avoid issues when switching computers:
 /Logs

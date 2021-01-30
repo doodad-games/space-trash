@@ -24,8 +24,12 @@ public class GameConfig : ScriptableObject
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    static void HandleDomainReload() =>
+    static void HandleDomainReload()
+    {
         _sc = new StaticCache();
+
+        Application.targetFrameRate = 144;
+    }
     
     public static int SpawnCheckLayer
     {

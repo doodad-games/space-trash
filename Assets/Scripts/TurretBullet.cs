@@ -4,7 +4,15 @@ public class TurretBullet : MonoBehaviour
 {
     const float SPEED = 0.06f;
 
-    public GameObject Owner => _owner.gameObject;
+    public GameObject Owner
+    {
+        get
+        {
+            if (_owner == null)
+                return null;
+            return _owner.gameObject;
+        }
+    }
 
     Turret _owner;
 

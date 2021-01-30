@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4998147929950306471}
   - component: {fileID: 3785282157828598871}
   - component: {fileID: -6086771257068658037}
+  - component: {fileID: 3351533182907642736}
   m_Layer: 0
   m_Name: Boom1
   m_TagString: Untagged
@@ -126,7 +127,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 224b6548f6041a144b771c73d0eb2b38, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -212,3 +213,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3351533182907642736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5500166134395506927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf695763aa6375449be038f1be6f5b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 224b6548f6041a144b771c73d0eb2b38, type: 3}
+  - {fileID: 8300000, guid: 4411e686e362da244a077fa14266f720, type: 3}
