@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 1f23f71753dcffc44a5214ec51b73d8f, type: 3}
-    totalSpriteSurfaceArea: 1048576
+    totalSpriteSurfaceArea: 1114112
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -65,10 +65,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 835823ecf90169e4b966dc474c01b08a, type: 3}
   - {fileID: 21300000, guid: 4004d03df1b485c43a14f02e2656b7e8, type: 3}
   - {fileID: 21300000, guid: c497e87dfb2cf0045ac34f64ebdcf1e1, type: 3}
+  - {fileID: 21300000, guid: 65fa585e9aa77b14e9389ef6cac1eeb9, type: 3}
   - {fileID: 21300000, guid: f8dfed8ece6c6c84699a282203c93b8b, type: 3}
   m_PackedSpriteNamesToIndex:
   - turret-charge
-  - explosion-text
+  - visual-tnt-1
   - tutorial-w
   - white-square
   - trash-medium-1
@@ -82,6 +83,7 @@ SpriteAtlas:
   - tutorial-up
   - tutorial-left
   - tutorial-a
+  - visual-sticky-1
   - turret
   m_RenderDataMap: {}
   m_Tag: Atlas_Small

@@ -62,7 +62,7 @@ public class SpawnController : MonoBehaviour
                 -Mathf.Log((x / 3600) + 0.1f) * 2
             );
 
-            var resourceLoc = GameConfig.TrashResources["Death"].PickRandom();
+            var resourceLoc = GameConfig.ResourceBuckets["TrashDeath"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             Spawn(prefabToSpawn);
         }
@@ -87,7 +87,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = 1f;
 
-            var resourceLoc = GameConfig.TrashResources["Small"].PickRandom();
+            var resourceLoc = GameConfig.ResourceBuckets["TrashSmall"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
             ApplyInitialMomentum(obj, 1.2f);
@@ -96,7 +96,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = 4f;
 
-            var resourceLoc = GameConfig.TrashResources["Medium"].PickRandom();
+            var resourceLoc = GameConfig.ResourceBuckets["TrashMedium"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
             ApplyInitialMomentum(obj, 1f);
@@ -105,7 +105,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = 7f;
 
-            var resourceLoc = GameConfig.TrashResources["Large"].PickRandom();
+            var resourceLoc = GameConfig.ResourceBuckets["TrashLarge"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
             ApplyInitialMomentum(obj, 0.4f);

@@ -64,14 +64,14 @@ public class GameConfig : ScriptableObject
             );
     }
     
-    public static IReadOnlyDictionary<string, IReadOnlyList<string>> TrashResources
+    public static IReadOnlyDictionary<string, IReadOnlyList<string>> ResourceBuckets
     {
         get
         {
-            if (_sc.trashResources == null)
+            if (_sc.resourceBuckets == null)
             {
                 var dict = new Dictionary<string, List<string>>();
-                foreach (var resource in _i._auto.trashResources)
+                foreach (var resource in _i._auto.resourceBucketItems)
                 {
                     if (!dict.ContainsKey(resource.type))
                         dict[resource.type] = new List<string>();
@@ -82,10 +82,10 @@ public class GameConfig : ScriptableObject
                 foreach (var pair in dict)
                     roDict[pair.Key] = pair.Value;
 
-                _sc.trashResources = roDict;
+                _sc.resourceBuckets = roDict;
             }
 
-            return _sc.trashResources;
+            return _sc.resourceBuckets;
         }
     }
 
@@ -102,16 +102,16 @@ public class GameConfig : ScriptableObject
         public GameConfig i;
         public int spawnCheckLayer = -1;
         public int id;
-        public Dictionary<string, IReadOnlyList<string>> trashResources;
+        public Dictionary<string, IReadOnlyList<string>> resourceBuckets;
     }
 
     [Serializable]
     struct AutoPopulated
     {
-        public TrashResource[] trashResources;
+        public ResourceBucketItem[] resourceBucketItems;
 
         [Serializable]
-        public struct TrashResource
+        public struct ResourceBucketItem
         {
             public string type;
             public string path;
@@ -126,24 +126,24 @@ public class GameConfig : ScriptableObject
 
         var config = Resources.Load<GameConfig>("GameConfig");
 
-        UpdateDeathTrashResourceNames(config);
+        UpdateResourceBucketItems(config);
 
         EditorUtility.SetDirty(config);
 
         Debug.Log("Config: Auto Populate complete");
     }
 
-    static void UpdateDeathTrashResourceNames(GameConfig config)
+    static void UpdateResourceBucketItems(GameConfig config)
     {
-        var resourcePathReg = new Regex("Assets/Resources/(Content/Trash/([^/]+)/.*)\\.prefab");
+        var resourcePathReg = new Regex("Assets/Resources/(Content/Buckets/([^/]+)/.*)\\.prefab");
 
-        config._auto.trashResources = 
-            AssetDatabase.FindAssets("t:Prefab", new string[] { "Assets/Resources/Content/Trash" })
+        config._auto.resourceBucketItems = 
+            AssetDatabase.FindAssets("t:Prefab", new string[] { "Assets/Resources/Content/Buckets" })
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .Select(_ =>
                 {
                     var regMatch = resourcePathReg.Match(_);
-                    return new AutoPopulated.TrashResource
+                    return new AutoPopulated.ResourceBucketItem
                     {
                         type = regMatch.Groups[2].Value,
                         path = regMatch.Groups[1].Value
@@ -152,8 +152,8 @@ public class GameConfig : ScriptableObject
                 .ToArray();
         
         Debug.Log(string.Format(
-            "Found {0} trash in Assets/Resources/Content/Trash",
-            config._auto.trashResources.Length
+            "Found {0} resources in Assets/Resources/Content/Buckets",
+            config._auto.resourceBucketItems.Length
         ));
     }
 #endif

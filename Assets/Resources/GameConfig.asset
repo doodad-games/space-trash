@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   _auto:
-    trashResources:
-    - type: Death
-      path: Content/Trash/Death/TrashDeath1
-    - type: Large
-      path: Content/Trash/Large/TrashLarge1
-    - type: Medium
-      path: Content/Trash/Medium/TrashMedium1
-    - type: Small
-      path: Content/Trash/Small/TrashSmall1
+    resourceBucketItems:
+    - type: EffectVisualsPlayer
+      path: Content/Buckets/EffectVisualsPlayer/VisualPlayer1
+    - type: EffectVisualsSticky
+      path: Content/Buckets/EffectVisualsSticky/VisualSticky1
+    - type: EffectVisualsTNT
+      path: Content/Buckets/EffectVisualsTNT/VisualTNT1
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath1
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge1
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium1
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall1
   _masterMixer: {fileID: 24100000, guid: 87b9cf424d03e594d9a69e1a033e04e9, type: 2}

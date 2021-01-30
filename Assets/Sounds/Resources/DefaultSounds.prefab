@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 8051063996630097732}
   - component: {fileID: 8605056429094616416}
   m_Layer: 0
-  m_Name: game-over
+  m_Name: exit-game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -853,7 +853,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 87b9cf424d03e594d9a69e1a033e04e9, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 06b2712df2aa76b4c9eac475500309ce, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 83c3624dac093bc4ca8c11b2aecfefc7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

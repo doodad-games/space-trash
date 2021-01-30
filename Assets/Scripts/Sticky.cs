@@ -17,7 +17,8 @@ public class Sticky : MonoBehaviour
 #pragma warning restore CS0649
 
     int _id;
-    Player _player;
+    bool _isPlayer;
+    bool _isTNT;
     Rigidbody2D _rb;
 
     bool _isInChainReaction;
@@ -28,11 +29,11 @@ public class Sticky : MonoBehaviour
 
     void Awake()
     {
-        _player = GetComponent<Player>();
+        _isPlayer = GetComponent<Player>() != null;
         _rb = GetComponent<Rigidbody2D>();
 
         var tnt = GetComponent<TNT>();
-        _isInChainReaction = tnt != null;
+        _isTNT = _isInChainReaction = tnt != null;
     }
     
     void OnEnable()
@@ -58,7 +59,7 @@ public class Sticky : MonoBehaviour
         }
 
         if (
-            _player != null ||
+            _isPlayer ||
             _root.gameObject == Player.I.gameObject
         )
         {
@@ -84,7 +85,7 @@ public class Sticky : MonoBehaviour
     void UpdatePostDisconnectionVelocity()
     {
         if (
-            _player != null ||
+            _isPlayer ||
             _parent != null ||
             _rb.velocity.x <= 0
         ) return;
@@ -106,9 +107,9 @@ public class Sticky : MonoBehaviour
         // Abort if lower priority
         {
             // Player is always priority
-            if (otherRoot._player != null)
+            if (otherRoot._isPlayer)
                 return;
-            if (_root._player == null)
+            if (!_root._isPlayer)
             {
                 // Faster or older takes is priority
                 var myVel = _root._rb.velocity.sqrMagnitude;
@@ -145,12 +146,11 @@ public class Sticky : MonoBehaviour
             return;
         _destroyed = true;
 
-        var boomPrefab = Resources.Load<GameObject>("Effects/Boom1");
-        Instantiate(boomPrefab, boomPoint, Quaternion.identity);
+        SpawnBoomFX(boomPoint);
         
         onDestroyed?.Invoke();
 
-        if (_player != null)
+        if (_isPlayer)
             return;
         
         if (_parent != null)
@@ -191,8 +191,10 @@ public class Sticky : MonoBehaviour
 
     void ReTopo(HashSet<Sticky> visitedSet, Sticky newChild)
     {
-        if (visitedSet.Contains(newChild))
-            return;
+        if (
+            newChild == null ||
+            visitedSet.Contains(newChild)
+        ) return;
         visitedSet.Add(newChild);
 
         var toVisit = new HashSet<Sticky>(newChild._directChildren);
@@ -216,5 +218,62 @@ public class Sticky : MonoBehaviour
         _root = newRoot;
         foreach (var child in _directChildren)
             child.RecursivelyUpdateRoot(newRoot);
+    }
+
+    void SpawnBoomFX(Vector3 boomPoint)
+    {
+        int numVisuals;
+        string type;
+        if (_isPlayer)
+        {
+            type = "Player";
+            numVisuals = UnityEngine.Random.Range(2, 5);
+        }
+        else if (_isTNT)
+        {
+            type = "TNT";
+
+            if (_root._isPlayer)
+                numVisuals = 1;
+            else
+                numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
+        }
+        else
+        {
+            type = "Sticky";
+
+            if (_root._isPlayer)
+                numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
+            else
+                numVisuals = UnityEngine.Random.value > 0.6f ? 1 : 0;
+        }
+
+        var soundResource = string.Format("Effects/BoomSound{0}", type);
+        var soundPrefab = Resources.Load<GameObject>(soundResource);
+        Instantiate(soundPrefab, boomPoint, Quaternion.identity);
+
+        if (numVisuals == 0)
+            return;
+        
+        var visualBucketKey = string.Format("EffectVisuals{0}", type);
+        var bucket = GameConfig.ResourceBuckets[visualBucketKey];
+
+        IReadOnlyList<string> visuals;
+        if (numVisuals > bucket.Count)
+            visuals = bucket;
+        else
+            visuals = bucket.PickRandom(numVisuals);
+
+        for (var i = 0; i != numVisuals; ++i)
+        {
+            var visual = visuals[i % visuals.Count];
+            var visualPrefab = Resources.Load<GameObject>(visual);
+
+            var spawnPoint = boomPoint;
+            if (i != 0)
+                spawnPoint += (Vector3)UnityEngine.Random.insideUnitCircle;
+
+            Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
+        }
     }
 }

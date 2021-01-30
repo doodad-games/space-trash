@@ -26,7 +26,7 @@ public class Turret : MonoBehaviour
         bulletObj.GetComponent<TurretBullet>()
             .Init(this);
 
-        var spawnSoundPrefab = Resources.Load<GameObject>("Effects/TurretBulletSpawnSound");
+        var spawnSoundPrefab = Resources.Load<GameObject>("Effects/TurretBulletSoundSpawn");
         Instantiate(spawnSoundPrefab, spawnPos, Quaternion.identity);
     }
 }

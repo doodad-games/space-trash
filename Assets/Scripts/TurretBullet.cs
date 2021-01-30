@@ -25,7 +25,7 @@ public class TurretBullet : MonoBehaviour
         if (turret == _owner)
             return;
 
-        var soundPrefab = Resources.Load<GameObject>("Effects/TurretBulletCollideSound");
+        var soundPrefab = Resources.Load<GameObject>("Effects/TurretBulletSoundCollide");
         Instantiate(soundPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);

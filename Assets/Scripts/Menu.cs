@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour
 
     public void HandleExitPressed() 
     {
-        SoundController.Play("game-over");
+        SoundController.Play("player-boom");
         _anim.SetTrigger("Exit");
     }
 
