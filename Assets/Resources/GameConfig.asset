@@ -90,8 +90,22 @@ MonoBehaviour:
       path: Content/Buckets/TrashDeath/TrashDeath1
     - type: TrashLarge
       path: Content/Buckets/TrashLarge/TrashLarge1
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge2
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge3
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge4
     - type: TrashMedium
       path: Content/Buckets/TrashMedium/TrashMedium1
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium2
     - type: TrashSmall
       path: Content/Buckets/TrashSmall/TrashSmall1
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall2
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall3
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall4
   _masterMixer: {fileID: 24100000, guid: 87b9cf424d03e594d9a69e1a033e04e9, type: 2}

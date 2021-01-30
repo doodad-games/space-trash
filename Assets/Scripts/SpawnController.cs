@@ -70,7 +70,7 @@ public class SpawnController : MonoBehaviour
         {
             nextSpawnDelay = Mathf.Max(
                 0.3f,
-                -Mathf.Log((x / 400) + 0.1f) * 2
+                -Mathf.Log((x / 400) + 0.1f)
             );
 
             var prefabToSpawn = Resources.Load<GameObject>("Content/Turret");
@@ -85,30 +85,30 @@ public class SpawnController : MonoBehaviour
             ApplyInitialMomentum(obj, 1.2f);
         } else if (type == SpawnType.TrashSmall)
         {
-            nextSpawnDelay = 1f;
+            nextSpawnDelay = 0.65f;
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashSmall"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
-            ApplyInitialMomentum(obj, 1.2f);
+            ApplyInitialMomentum(obj, 1.5f);
         }
         else if (type == SpawnType.TrashMedium)
         {
-            nextSpawnDelay = 3f;
+            nextSpawnDelay = 2.5f;
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashMedium"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
-            ApplyInitialMomentum(obj, 1f);
+            ApplyInitialMomentum(obj, 1.2f);
         }
         else
         {
-            nextSpawnDelay = 5f;
+            nextSpawnDelay = 4f;
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashLarge"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var obj = Spawn(prefabToSpawn);
-            ApplyInitialMomentum(obj, 0.4f);
+            ApplyInitialMomentum(obj, 0.8f);
         }
 
         _nextSpawnAt[iType] = Time.time + nextSpawnDelay;
@@ -117,7 +117,7 @@ public class SpawnController : MonoBehaviour
     float TNTSpawnDelay(float x) =>
         Mathf.Max(
             0.5f,
-            -Mathf.Log((x / 400) + 0.1f) * 4
+            -Mathf.Log((x / 400) + 0.1f)
         );
 
     GameObject Spawn(GameObject prefabToSpawn)

@@ -134,7 +134,8 @@ public class Sticky : MonoBehaviour
         visitedSet.Add(this);
         ReTopo(visitedSet, otherSticky);
 
-        otherSticky._stickSound.Play();
+        if (otherSticky._stickSound.isActiveAndEnabled)
+            otherSticky._stickSound.Play();
     }
 
     void DestroyFromCollision(Collision2D collision) =>
@@ -280,7 +281,7 @@ public class Sticky : MonoBehaviour
                     (Vector3)UnityEngine.Random.insideUnitCircle * 2;
 
             new Async(Player.I)
-                .Wait(0.2f * i)
+                .Wait(0.1f * i)
                 .Then(() =>
                 {
                     Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
