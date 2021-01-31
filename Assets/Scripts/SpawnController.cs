@@ -64,7 +64,18 @@ public class SpawnController : MonoBehaviour
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashDeath"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
-            Spawn(prefabToSpawn);
+            var xPos = Player.I.transform.position.x + X_SPAWN_OFFSET;
+            var yPos = UnityEngine.Random.Range(-MINMAX_Y_RANGE, MINMAX_Y_RANGE) * 1.3f;
+            var spawnPos = new Vector3(xPos, yPos, 0);
+
+            var spawnRot = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f));
+
+            var obj = Instantiate(
+                prefabToSpawn,
+                spawnPos,
+                spawnRot
+            );
+            obj.transform.localScale = Vector3.one * 1.2f;
         }
         else if (type == SpawnType.Turret)
         {

@@ -88,6 +88,16 @@ MonoBehaviour:
       path: Content/Buckets/EffectVisualsTNT/VisualTNT20
     - type: TrashDeath
       path: Content/Buckets/TrashDeath/TrashDeath1
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath2
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath3
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath4
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath5
+    - type: TrashDeath
+      path: Content/Buckets/TrashDeath/TrashDeath6
     - type: TrashLarge
       path: Content/Buckets/TrashLarge/TrashLarge1
     - type: TrashLarge
