@@ -15,10 +15,16 @@ public class Player : MonoBehaviour
     public static event Action onDestroyed;
 
     public static Player I { get; private set; }
+    public static bool Destroyed => I._destroyed;
+    public static bool JustReceivedInput => 
+        I._prevVertInput != 0 || I._prevRotInput != 0;
+
+    public Sticky Sticky => _sticky;
 
     Rigidbody2D _rb;
     Sticky _sticky;
 
+    bool _destroyed;
     int _prevVertInput;
     int _prevRotInput;
 
@@ -121,6 +127,7 @@ public class Player : MonoBehaviour
                 TimeMode.Unscaled
             );
 
+        _destroyed = true;
         onDestroyed?.Invoke();
     }
 }

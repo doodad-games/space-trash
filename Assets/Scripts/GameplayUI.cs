@@ -1,8 +1,16 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameplayUI : MonoBehaviour
 {
+    const string PP_HIGHSCORE = "highScore";
+
+#pragma warning disable CS0649
+    [SerializeField] TextMeshProUGUI _scoreText;
+    [SerializeField] TextMeshProUGUI _highScoreText;
+#pragma warning restore CS0649
+
     Animator _anim;
 
     void Awake() =>
@@ -34,6 +42,18 @@ public class GameplayUI : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
     
-    void HandlePlayerDestroyed() =>
+    void HandlePlayerDestroyed()
+    {
         _anim.SetBool("IsEndGame", true);
+
+        var highScore = PlayerPrefs.GetInt(PP_HIGHSCORE, -1);
+        if (ScoreController.Score > highScore)
+        {
+            highScore = ScoreController.Score;
+            PlayerPrefs.SetInt(PP_HIGHSCORE, highScore);
+        }
+
+        _scoreText.text = ScoreController.Score.ToString();
+        _highScoreText.text = highScore.ToString();
+    }
 }

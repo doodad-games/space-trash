@@ -9,6 +9,11 @@ public class Sticky : MonoBehaviour
     const float CHAIN_REACTION_STEP_DELAY = 0.25f;
 
     public event Action onDestroyed;
+    public event Action onChildrenChanged;
+
+    public bool HasChildren => _directChildren.Count != 0;
+    public int NumDescendents => _numDescendents;
+    public int NumTNTs => _numTNTs;
 
     [HideInInspector] public float torque;
 
@@ -21,6 +26,8 @@ public class Sticky : MonoBehaviour
     bool _isTNT;
     Rigidbody2D _rb;
 
+    int _numDescendents;
+    int _numTNTs;
     bool _isInChainReaction;
     Sticky _root;
     Sticky _parent;
@@ -33,14 +40,18 @@ public class Sticky : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
 
         var tnt = GetComponent<TNT>();
-        _isTNT = _isInChainReaction = tnt != null;
+        _isTNT = tnt != null;
     }
     
     void OnEnable()
     {
         _root = this;
+        _parent = null;
+        _isInChainReaction = _isPlayer || _isTNT;
         _directChildren = new List<Sticky>();
         _id = GameConfig.NewID;
+        _numDescendents = _numTNTs = 0;
+        _destroyed = false;
     }
     
     void FixedUpdate()
@@ -153,21 +164,19 @@ public class Sticky : MonoBehaviour
 
         if (_isPlayer)
             return;
-        
-        if (_parent != null)
-        {
-            _parent._directChildren.Remove(this);
 
-            if (_isInChainReaction)
-                _parent.MarkForChainReaction();
-        }
+        var numDescendents = 0;
+        var numTNTs = 0;
 
         foreach (var child in _directChildren)
         {
             if (child == null)
                 continue;
 
-            child.RecursivelyUpdateRoot(child);
+            var (childrenUpdated, tntsUpdated) = child.RecursivelyUpdateRoot(child);
+            numDescendents += childrenUpdated;
+            numTNTs += tntsUpdated;
+
             child.transform.parent = null;
             child.torque = _root.torque;
 
@@ -176,6 +185,17 @@ public class Sticky : MonoBehaviour
 
             if (_isInChainReaction)
                 child.MarkForChainReaction();
+        }
+
+        _root._numDescendents -= numDescendents;
+        _root._numTNTs -= numTNTs;
+        
+        if (_parent != null)
+        {
+            _parent.RemoveChild(this);
+
+            if (_isInChainReaction)
+                _parent.MarkForChainReaction();
         }
 
         Destroy(gameObject);
@@ -202,23 +222,35 @@ public class Sticky : MonoBehaviour
         if (newChild._parent != null)
             toVisit.Add(newChild._parent);
 
+        newChild.ClearChildren();
         newChild._root = _root;
 
         newChild._parent = this;
-        _directChildren.Add(newChild);
+        AddChild(newChild);
 
         newChild.transform.parent = transform;
 
-        newChild._directChildren.Clear();
         foreach (var child in toVisit)
             newChild.ReTopo(visitedSet, child);
     }
 
-    void RecursivelyUpdateRoot(Sticky newRoot)
+    (int, int) RecursivelyUpdateRoot(Sticky newRoot)
     {
+        var numDescendents = 1;
+        var numTNTs = 0;
+        if (_isTNT)
+            numTNTs += 1;
+
         _root = newRoot;
         foreach (var child in _directChildren)
-            child.RecursivelyUpdateRoot(newRoot);
+        {
+            var (childDescendents, childTNTs) = child.RecursivelyUpdateRoot(newRoot);
+
+            numDescendents += childDescendents;
+            numTNTs += childTNTs;
+        }
+
+        return (numDescendents, numTNTs);
     }
 
     void SpawnBoomFX(Vector3 boomPoint)
@@ -287,5 +319,38 @@ public class Sticky : MonoBehaviour
                     Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
                 });
         }
+    }
+
+    void AddChild(Sticky child)
+    {
+        ++_root._numDescendents;
+        if (child._isTNT)
+            ++_root._numTNTs;
+        
+        _directChildren.Add(child);
+        _root.onChildrenChanged?.Invoke();
+    }
+
+    void RemoveChild(Sticky child)
+    {
+        --_root._numDescendents;
+        if (child._isTNT)
+            --_root._numTNTs;
+
+        _directChildren.Remove(child);
+        _root.onChildrenChanged?.Invoke();
+    }
+
+    void ClearChildren()
+    {
+        foreach (var child in _directChildren)
+        {
+            --_root._numDescendents;
+            if (child._isTNT)
+                --_root._numTNTs;
+        }
+
+        _directChildren.Clear();
+        _root.onChildrenChanged?.Invoke();
     }
 }

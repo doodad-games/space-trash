@@ -110,6 +110,10 @@ MonoBehaviour:
       path: Content/Buckets/TrashMedium/TrashMedium1
     - type: TrashMedium
       path: Content/Buckets/TrashMedium/TrashMedium2
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium3
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium4
     - type: TrashSmall
       path: Content/Buckets/TrashSmall/TrashSmall1
     - type: TrashSmall
