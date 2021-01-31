@@ -20,7 +20,7 @@ public class DeathTrash : MonoBehaviour
             var otherDeathTrash = other.GetComponentInParent<DeathTrash>();
             if (otherDeathTrash != null)
             {
-                if (otherDeathTrash._id > _id)
+                if (_id > otherDeathTrash._id)
                     return;
 
                 Destroy(otherDeathTrash.gameObject);

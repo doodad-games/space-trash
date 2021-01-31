@@ -18,6 +18,15 @@ public class GameplayUI : MonoBehaviour
     
     public void FadeOutMusic() =>
         GameConfig.FadeMusicVolume(false);
+    
+    public void HandleBackToMenuPressed() =>
+        _anim.SetTrigger("BackToMenu");
+
+    public void HandleCreditsPressed() =>
+        _anim.SetBool("Credits", true);
+
+    public void HandleBackToGameOverPressed() =>
+        _anim.SetBool("Credits", false);
 
     public void ReturnToMenu()
     {
@@ -26,5 +35,5 @@ public class GameplayUI : MonoBehaviour
     }
     
     void HandlePlayerDestroyed() =>
-        _anim.SetTrigger("GameOver");
+        _anim.SetBool("IsEndGame", true);
 }

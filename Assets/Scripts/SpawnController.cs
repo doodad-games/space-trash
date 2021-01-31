@@ -57,15 +57,19 @@ public class SpawnController : MonoBehaviour
 
         if (type == SpawnType.TrashDeath)
         {
-            nextSpawnDelay = Mathf.Max(
+            var baseSpawnDelay = Mathf.Max(
                 0.5f,
                 -Mathf.Log((x / 800) + 0.1f) * 2
+            );
+            nextSpawnDelay = UnityEngine.Random.Range(
+                baseSpawnDelay * 0.6f,
+                baseSpawnDelay * 1.6f
             );
 
             var resourceLoc = GameConfig.ResourceBuckets["TrashDeath"].PickRandom();
             var prefabToSpawn = Resources.Load<GameObject>(resourceLoc);
             var xPos = Player.I.transform.position.x + X_SPAWN_OFFSET;
-            var yPos = UnityEngine.Random.Range(-MINMAX_Y_RANGE, MINMAX_Y_RANGE) * 1.3f;
+            var yPos = UnityEngine.Random.Range(-MINMAX_Y_RANGE, MINMAX_Y_RANGE) * 1.4f;
             var spawnPos = new Vector3(xPos, yPos, 0);
 
             var spawnRot = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f));
@@ -75,7 +79,7 @@ public class SpawnController : MonoBehaviour
                 spawnPos,
                 spawnRot
             );
-            obj.transform.localScale = Vector3.one * 1.2f;
+            obj.transform.localScale = Vector3.one * 1.4f;
         }
         else if (type == SpawnType.Turret)
         {
