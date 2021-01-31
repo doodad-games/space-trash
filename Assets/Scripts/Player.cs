@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[DefaultExecutionOrder(-1)]
 public class Player : MonoBehaviour
 {
     const float HORIZONTAL_VELOCITY = 1f;
