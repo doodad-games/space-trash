@@ -1,3 +1,4 @@
+using MyLibrary;
 using UnityEngine;
 
 public class SpawnController : MonoBehaviour
