@@ -40,6 +40,30 @@ MonoBehaviour:
       path: Content/Buckets/EffectVisualsPlayer/VisualPlayer12
     - type: EffectVisualsPlayer
       path: Content/Buckets/EffectVisualsPlayer/VisualPlayer13
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot1
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot2
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot3
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot4
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot5
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot6
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot7
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot8
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot9
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot10
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot11
+    - type: EffectVisualsShot
+      path: Content/Buckets/EffectVisualsShot/VisualShot12
     - type: EffectVisualsSticky
       path: Content/Buckets/EffectVisualsSticky/VisualSticky4
     - type: EffectVisualsSticky
@@ -56,6 +80,10 @@ MonoBehaviour:
       path: Content/Buckets/EffectVisualsSticky/VisualSticky10
     - type: EffectVisualsSticky
       path: Content/Buckets/EffectVisualsSticky/VisualSticky11
+    - type: EffectVisualsThud
+      path: Content/Buckets/EffectVisualsThud/VisualThud1
+    - type: EffectVisualsThud
+      path: Content/Buckets/EffectVisualsThud/VisualThud2
     - type: EffectVisualsTNT
       path: Content/Buckets/EffectVisualsTNT/VisualTNT1
     - type: EffectVisualsTNT

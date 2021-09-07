@@ -29,6 +29,9 @@ public class TurretBullet : MonoBehaviour
         Instantiate(soundPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
+
+        if (collision.collider.GetComponent<Sticky>() == null)
+            Visuals.Spawn(transform.position, "EffectVisualsThud");
     }
 
     public void Init(Turret owner) =>

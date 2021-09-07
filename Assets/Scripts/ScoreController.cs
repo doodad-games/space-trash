@@ -1,21 +1,23 @@
+using System;
 using UnityEngine;
-using TMPro;
 
+[DefaultExecutionOrder(EXEC_ORDER)]
 public class ScoreController : MonoBehaviour
 {
+    public const int EXEC_ORDER = -1;
+
+    public static event Action onMultiplierChanged;
+    public static event Action onScoreChanged;
+
     const float SCORE_PERIOD = 5f;
     const float AVOIDANCE_MULTIPLIER_PERIOD = 2.5f;
     const float LAZY_MULTIPLIER_PERIOD = 0.3f;
     const float SURVIVAL_MULTIPLIER_PERIOD = 7.5f;
 
     public static int Score => _i._score;
+    public static int Multiplier => 1 + _i._avoidanceMultiplier + _i._lazyMultiplier + _i._survivalMultiplier + _i._stickyMultiplier;
 
     static ScoreController _i;
-
-#pragma warning disable CS0649
-    [SerializeField] TextMeshPro _multiplierText;
-    [SerializeField] TextMeshPro _scoreText;
-#pragma warning restore CS0649
 
     int _score;
 
@@ -27,8 +29,6 @@ public class ScoreController : MonoBehaviour
     float _nextAvoidanceMultiplierAfter;
     float _nextLazyMultiplierAfter;
     float _nextSurvivalMultiplierAfter;
-
-    int Multiplier => 1 + _avoidanceMultiplier + _lazyMultiplier + _survivalMultiplier + _stickyMultiplier;
 
     void OnEnable()
     {
@@ -42,8 +42,6 @@ public class ScoreController : MonoBehaviour
 
         Player.I.Sticky.onChildrenChanged += HandlePlayerStickiesChanged;
         HandlePlayerStickiesChanged();
-
-        Refresh();
     }
 
     void Update()
@@ -51,13 +49,15 @@ public class ScoreController : MonoBehaviour
         if (Player.Destroyed)
             return;
 
-        var shouldRefresh = CheckAvoidanceMultiplier();
-        shouldRefresh |= CheckLazyMultiplier();
-        shouldRefresh |= CheckSurvivalMultiplier();
-        shouldRefresh |= CheckScorePeriod();
+        var multiplierChanged = CheckAvoidanceMultiplier();
+        multiplierChanged |= CheckLazyMultiplier();
+        multiplierChanged |= CheckSurvivalMultiplier();
 
-        if (shouldRefresh)
-            Refresh();
+        if (multiplierChanged)
+            onMultiplierChanged?.Invoke();
+
+        if (CheckScorePeriod())
+            onScoreChanged?.Invoke();
     }
 
     void OnDisable()
@@ -74,7 +74,6 @@ public class ScoreController : MonoBehaviour
     {
         var sticky = Player.I.Sticky;
         _stickyMultiplier = sticky.NumDescendents * 2 + sticky.NumTNTs * 5;
-        Refresh();
     }
 
     bool CheckAvoidanceMultiplier()
@@ -150,11 +149,5 @@ public class ScoreController : MonoBehaviour
         CheckScorePeriod();
 
         return true;
-    }
-
-    void Refresh()
-    {
-        _multiplierText.text = Multiplier.ToString();
-        _scoreText.text = _score.ToString();
     }
 }

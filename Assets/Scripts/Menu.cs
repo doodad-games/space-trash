@@ -1,3 +1,4 @@
+using System.Linq;
 using MyLibrary;
 using TMPro;
 using UnityEngine;
@@ -48,7 +49,7 @@ public class Menu : MonoBehaviour
             "-Suicide Squad"
         ),
         (
-            "I took it and I threw it on the ground",
+            "I took this game and I threw it on the ground",
             "-The Lonely Island"
         ),
         (
@@ -61,7 +62,7 @@ public class Menu : MonoBehaviour
         ),
         (
             "When I think of trash, I think of Doodad Games",
-            "-Blizzard Entertainment"
+            "-Electronic Arts"
         )
     };
 
@@ -71,9 +72,16 @@ public class Menu : MonoBehaviour
 #pragma warning restore CS0649
 
     Animator _anim;
+    int[] _trashTalkOrder;
     int _trashTalkI;
 
-    void Awake() => _anim = GetComponent<Animator>();
+    void Awake()
+    {
+        _anim = GetComponent<Animator>();
+        _trashTalkOrder = Enumerable.Range(0, _trashTalks.Length)
+            .Shuffle_()
+            .ToArray();
+    }
 
     void OnEnable() => _trashTalkI = 0;
 
@@ -98,7 +106,7 @@ public class Menu : MonoBehaviour
     public void RefreshTrashTalk()
     {
         _trashTalkI = (_trashTalkI + 1) % _trashTalks.Length;
-        var (line1, line2) = _trashTalks[_trashTalkI];
+        var (line1, line2) = _trashTalks[_trashTalkOrder[_trashTalkI]];
         _trashTalkLine1.text = '"' + line1 + '"';
         _trashTalkLine2.text = "    " + line2;
     }

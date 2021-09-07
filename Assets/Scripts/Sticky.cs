@@ -66,7 +66,7 @@ public class Sticky : MonoBehaviour
         var otherSticky = collision.collider.GetComponent<Sticky>();
         if (otherSticky != null)
         {
-            HandleStickyCollision(otherSticky);
+            HandleStickyCollision(otherSticky, collision.contacts[0].point);
             return;
         }
 
@@ -78,7 +78,7 @@ public class Sticky : MonoBehaviour
             var deathTrash = collision.collider.GetComponent<DeathTrash>();
             if (deathTrash != null)
             {
-                DestroyFromCollision(collision);
+                DestroyFromCollision(collision, false);
                 return;
             }
         }
@@ -89,7 +89,7 @@ public class Sticky : MonoBehaviour
             bullet.Owner != gameObject
         )
         {
-            DestroyFromCollision(collision);
+            DestroyFromCollision(collision, true);
             return;
         }
     }
@@ -108,7 +108,7 @@ public class Sticky : MonoBehaviour
         );
     }
 
-    void HandleStickyCollision(Sticky otherSticky)
+    void HandleStickyCollision(Sticky otherSticky, Vector3 pos)
     {
         var otherRoot = otherSticky._root;
 
@@ -137,6 +137,11 @@ public class Sticky : MonoBehaviour
             }
         }
 
+        SpawnStickVFX(pos);
+
+        if (otherSticky._stickSound.isActiveAndEnabled)
+            otherSticky._stickSound.Play();
+
         // Remove other cluster's velocity
         var otherRB = otherRoot.GetComponent<Rigidbody2D>();
         otherRB.velocity = Vector2.zero;
@@ -145,21 +150,18 @@ public class Sticky : MonoBehaviour
         var visitedSet = new HashSet<Sticky>();
         visitedSet.Add(this);
         ReTopo(visitedSet, otherSticky);
-
-        if (otherSticky._stickSound.isActiveAndEnabled)
-            otherSticky._stickSound.Play();
     }
 
-    void DestroyFromCollision(Collision2D collision) =>
-        DoTheBoom(collision.contacts[0].point);
+    void DestroyFromCollision(Collision2D collision, bool wasShot) =>
+        DoTheBoom(collision.contacts[0].point, wasShot);
     
-    void DoTheBoom(Vector3 boomPoint)
+    void DoTheBoom(Vector3 boomPoint, bool wasShot)
     {
         if (_destroyed)
             return;
         _destroyed = true;
 
-        SpawnBoomFX(boomPoint);
+        SpawnBoomFX(boomPoint, wasShot);
         
         onDestroyed?.Invoke();
 
@@ -208,7 +210,7 @@ public class Sticky : MonoBehaviour
     {
         _isInChainReaction = true;
         yield return new WaitForSeconds(CHAIN_REACTION_STEP_DELAY);
-        DoTheBoom(transform.position);
+        DoTheBoom(transform.position, false);
     }
 
     void ReTopo(HashSet<Sticky> visitedSet, Sticky newChild)
@@ -254,18 +256,21 @@ public class Sticky : MonoBehaviour
         return (numDescendents, numTNTs);
     }
 
-    void SpawnBoomFX(Vector3 boomPoint)
+    void SpawnStickVFX(Vector3 stickPoint) =>
+        Visuals.Spawn(stickPoint, "EffectVisualsThud");
+
+    void SpawnBoomFX(Vector3 boomPoint, bool wasShot)
     {
         int numVisuals;
-        string type;
+        string vfxBucket, soundResource;
         if (_isPlayer)
         {
-            type = "Player";
+            vfxBucket = soundResource = "Player";
             numVisuals = UnityEngine.Random.Range(2, 5);
         }
         else if (_isTNT)
         {
-            type = "TNT";
+            vfxBucket = soundResource = "TNT";
 
             if (
                 _root._isPlayer ||
@@ -277,49 +282,20 @@ public class Sticky : MonoBehaviour
         }
         else
         {
-            type = "Sticky";
-
-            if (_isInChainReaction)
-                numVisuals = 1;
-            else if (_root._isPlayer)
-                numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
-            else
-                numVisuals = UnityEngine.Random.value > 0.6f ? 1 : 0;
+            vfxBucket = wasShot ? "Shot" : "Sticky";
+            soundResource = "Sticky";
+            numVisuals = 1;
         }
 
-        var soundResource = string.Format("Effects/BoomSound{0}", type);
+        soundResource = $"Effects/BoomSound{soundResource}";
         var soundPrefab = Resources.Load<GameObject>(soundResource);
         Instantiate(soundPrefab, boomPoint, Quaternion.identity);
 
         if (numVisuals == 0)
             return;
         
-        var visualBucketKey = string.Format("EffectVisuals{0}", type);
-        var bucket = GameConfig.ResourceBuckets[visualBucketKey];
-
-        IReadOnlyList<string> visuals;
-        if (numVisuals > bucket.Count)
-            visuals = bucket;
-        else
-            visuals = bucket.PickRandom(numVisuals);
-
-        for (var i = 0; i != numVisuals; ++i)
-        {
-            var visual = visuals[i % visuals.Count];
-            var visualPrefab = Resources.Load<GameObject>(visual);
-
-            var spawnPoint = boomPoint;
-            if (i != 0)
-                spawnPoint +=
-                    (Vector3)UnityEngine.Random.insideUnitCircle * 2;
-
-            new Async(Player.I)
-                .Wait(0.1f * i)
-                .Then(() =>
-                {
-                    Instantiate(visualPrefab, spawnPoint, Quaternion.identity);
-                });
-        }
+        vfxBucket = $"EffectVisuals{vfxBucket}";
+        Visuals.Spawn(boomPoint, vfxBucket, numVisuals);
     }
 
     void AddChild(Sticky child)

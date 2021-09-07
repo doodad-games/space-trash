@@ -3,11 +3,14 @@ using MyLibrary;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[DefaultExecutionOrder(-1)]
+[DefaultExecutionOrder(EXEC_ORDER)]
 public class Player : MonoBehaviour
 {
+    public const int EXEC_ORDER = ScoreController.EXEC_ORDER - 1;
+
+    public const float MINMAX_VERTICAL_VELOCITY = 4f;
+
     const float HORIZONTAL_VELOCITY = 1f;
-    const float MINMAX_VERTICAL_VELOCITY = 4f;
     const float VERTICAL_VELOCITY_INC_STEP = 0.1f;
     const float VERTICAL_VELOCITY_OTHER_DIR_MULTIPLIER = 2.5f;
     const float MINMAX_Y_POS = 4f;
@@ -22,6 +25,8 @@ public class Player : MonoBehaviour
         I._prevVertInput != 0 || I._prevRotInput != 0;
 
     public Sticky Sticky => _sticky;
+    public Vector2 Velocity => _rb.velocity;
+    public float Torque => _sticky.torque;
 
     Rigidbody2D _rb;
     Sticky _sticky;

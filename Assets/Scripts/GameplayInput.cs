@@ -16,6 +16,14 @@ public class GameplayInput
                 Input.GetKey(KeyCode.S)
             ) return -1;
 
+            if (MobileInputButton.active)
+            {
+                var y = 0;
+                foreach (var input in MobileInputButton.ActiveInputs)
+                    y += input.Direction.y;
+                return y;
+            }
+
             return 0;
         }
     }
@@ -33,6 +41,14 @@ public class GameplayInput
                 Input.GetKey(KeyCode.LeftArrow) ||
                 Input.GetKey(KeyCode.A)
             ) return -1;
+
+            if (MobileInputButton.active)
+            {
+                var x = 0;
+                foreach (var input in MobileInputButton.ActiveInputs)
+                    x += input.Direction.x;
+                return x;
+            }
 
             return 0;
         }
