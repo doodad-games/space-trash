@@ -261,6 +261,7 @@ public class Sticky : MonoBehaviour
 
     void SpawnBoomFX(Vector3 boomPoint, bool wasShot)
     {
+        var prependExtraShotVisual = false;
         int numVisuals;
         string vfxBucket, soundResource;
         if (_isPlayer)
@@ -279,6 +280,9 @@ public class Sticky : MonoBehaviour
             ) numVisuals = 1;
             else
                 numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
+
+            if (wasShot)
+                prependExtraShotVisual = true;
         }
         else
         {
@@ -295,7 +299,7 @@ public class Sticky : MonoBehaviour
             return;
         
         vfxBucket = $"EffectVisuals{vfxBucket}";
-        Visuals.Spawn(boomPoint, vfxBucket, numVisuals);
+        Visuals.Spawn(boomPoint, vfxBucket, numVisuals, prependExtraShotVisual);
     }
 
     void AddChild(Sticky child)

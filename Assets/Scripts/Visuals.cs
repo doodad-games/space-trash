@@ -1,18 +1,26 @@
 using System.Collections.Generic;
+using System.Linq;
 using MyLibrary;
 using UnityEngine;
 
 public static class Visuals
 {
-    public static void Spawn(Vector3 point, string bucketName, int numVisuals = 1)
+    public static void Spawn(Vector3 point, string bucketName, int numVisuals = 1, bool prependExtraShotVisual = false)
     {
         var bucket = GameConfig.ResourceBuckets[bucketName];
-        IReadOnlyList<string> visuals;
+        List<string> visuals;
 
         if (numVisuals > bucket.Count)
-            visuals = bucket;
+            visuals = bucket.ToList();
         else
-            visuals = bucket.PickRandom(numVisuals);
+            visuals = bucket.PickRandom(numVisuals).ToList();
+        
+        if (prependExtraShotVisual)
+        {
+            ++numVisuals;
+            var shotVisual = GameConfig.ResourceBuckets["EffectVisualsShot"].PickRandom();
+            visuals.Insert(0, shotVisual);
+        }
 
         for (var i = 0; i != numVisuals; ++i)
         {
