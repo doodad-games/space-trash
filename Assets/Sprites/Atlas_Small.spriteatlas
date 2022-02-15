@@ -50,6 +50,7 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: cfb502300a94686408ac959a5f1f34ac, type: 3}
   - {fileID: 21300000, guid: 3f8182b03e3c3e04889286ebd3aa9595, type: 3}
   - {fileID: 21300000, guid: 4acabab03b7d27a40b119fa2cb3257fd, type: 3}
   - {fileID: 21300000, guid: 1a9ee921d85544947b069fc36053b6fc, type: 3}
@@ -81,16 +82,22 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0f8352770e044f646921e75d5353f333, type: 3}
   - {fileID: 21300000, guid: d064c4b7601814e43b46163680d7d3e1, type: 3}
   - {fileID: 21300000, guid: 146a06c789541874ab6a26fe5da56263, type: 3}
+  - {fileID: 21300000, guid: 82df902858a58174a86937c985e3d33e, type: 3}
+  - {fileID: 21300000, guid: 565c2c788f37cea458504174b7d30945, type: 3}
   - {fileID: 21300000, guid: f624eab874bda314eab4cebea0a5ea2b, type: 3}
   - {fileID: 21300000, guid: e0809f0966918a34ab92f9d17d3e3f06, type: 3}
   - {fileID: 21300000, guid: 73331a192ed95ce40860263aa3c69513, type: 3}
   - {fileID: 21300000, guid: 92e5e0b999ee5cf4db0d13c8f511f2e8, type: 3}
   - {fileID: 21300000, guid: 82c66cf951b17b9429d2dfae195c547e, type: 3}
   - {fileID: 21300000, guid: 31ff660a6766cef47922e00069537a18, type: 3}
+  - {fileID: 21300000, guid: 00a29b0a9a37711449c1517329a0ffc8, type: 3}
+  - {fileID: 21300000, guid: a8cd9f2ac6cd6c54f80ad43f50c2171e, type: 3}
   - {fileID: 21300000, guid: 16daef3ae61d722489d4aaaa58bf6663, type: 3}
   - {fileID: 21300000, guid: ad1a395a98efa3a438e82222ad7e48b7, type: 3}
   - {fileID: 21300000, guid: 9d5eb09a9d7ddd74c8950d8dabb2754a, type: 3}
   - {fileID: 21300000, guid: c811f40b872d957459c9f70568c1aa3e, type: 3}
+  - {fileID: 21300000, guid: 9aab182baf82dd5489ee60e941c15bcc, type: 3}
+  - {fileID: 21300000, guid: eca7e82b00c063a4c9cc4cd3d7096053, type: 3}
   - {fileID: 21300000, guid: e8e52c7b2b6ae094d90ec4543ab19781, type: 3}
   - {fileID: 21300000, guid: 36fc1b8bda50b944c9245622b6ce2a1b, type: 3}
   - {fileID: 21300000, guid: 269723db90d3de14bb46082a73fc0673, type: 3}
@@ -106,17 +113,22 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4004d03df1b485c43a14f02e2656b7e8, type: 3}
   - {fileID: 21300000, guid: c497e87dfb2cf0045ac34f64ebdcf1e1, type: 3}
   - {fileID: 21300000, guid: db0a7e8d4b5553b49b3cc6dd8f22a173, type: 3}
+  - {fileID: 21300000, guid: 9213789d1b88b8348a85f61bcc74fdbf, type: 3}
   - {fileID: 21300000, guid: e261c0ed3e985e244ba1ad5a8c3c7ad0, type: 3}
   - {fileID: 21300000, guid: 0392ff0ed12487146875c50dafaa9cb4, type: 3}
   - {fileID: 21300000, guid: 5677462eac72f8a4dbb37b94f7ce139c, type: 3}
   - {fileID: 21300000, guid: ce4a854e1c4586241a5d88530e9bd83c, type: 3}
   - {fileID: 21300000, guid: e6061c5e9d2192d4885d5202bd608b3d, type: 3}
+  - {fileID: 21300000, guid: 1031e7ceadfb8fe41a7593dbf69bf04d, type: 3}
   - {fileID: 21300000, guid: c55decfec8a976040af65de646876934, type: 3}
+  - {fileID: 21300000, guid: ff8d090fe13f0c74d8bef6495b09c9c2, type: 3}
+  - {fileID: 21300000, guid: 36040a0fe26a801459f6c0e578095e7d, type: 3}
   - {fileID: 21300000, guid: b3d9295f02ebfc74ab1ab9646b879976, type: 3}
   - {fileID: 21300000, guid: f44dc67f0db056046a164ffc94623eb0, type: 3}
   - {fileID: 21300000, guid: 52ffccdf76f0f6a41afaa67c5736b488, type: 3}
   - {fileID: 21300000, guid: e0c3deef34e3136488cbabb73e4c9a02, type: 3}
   m_PackedSpriteNamesToIndex:
+  - visual-nice-7
   - trash-small-3
   - visual-tnt-12
   - visual-sticky-7
@@ -148,16 +160,22 @@ SpriteAtlas:
   - trash-medium-2
   - tnt
   - visual-shot-8
+  - visual-nice-10
+  - visual-nice-9
   - visual-player-12
   - visual-player-11
   - visual-sticky-10
   - visual-tnt-11
   - visual-tnt-7
   - trash-small-2
+  - visual-nice-11
+  - visual-nice-12
   - visual-tnt-9
   - visual-tnt-6
   - turret-bullet
   - visual-player-7
+  - visual-nice-13
+  - visual-nice-4
   - tutorial-down
   - visual-sticky-6
   - visual-player-10
@@ -173,12 +191,16 @@ SpriteAtlas:
   - tutorial-left
   - tutorial-a
   - visual-thud-1
+  - visual-nice-8
   - visual-player-2
   - visual-shot-6
   - visual-shot-5
   - visual-player-9
   - trash-small-1
+  - visual-nice-6
   - visual-shot-1
+  - visual-nice-3
+  - visual-nice-2
   - visual-shot-7
   - visual-player-4
   - trash-small-4

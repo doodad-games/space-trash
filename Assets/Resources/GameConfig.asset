@@ -14,6 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _auto:
     resourceBucketItems:
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice2
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice3
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice4
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice6
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice7
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice8
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice9
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice10
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice11
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice12
+    - type: EffectVisualsNice
+      path: Content/Buckets/EffectVisualsNice/VisualNice13
     - type: EffectVisualsPlayer
       path: Content/Buckets/EffectVisualsPlayer/VisualPlayer1
     - type: EffectVisualsPlayer

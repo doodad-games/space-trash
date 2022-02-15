@@ -4,17 +4,11 @@ public class TurretBullet : MonoBehaviour
 {
     const float SPEED = 0.09f;
 
-    public GameObject Owner
-    {
-        get
-        {
-            if (_owner == null)
-                return null;
-            return _owner.gameObject;
-        }
-    }
+    public GameObject Owner => _owner == null ? null : _owner.gameObject;
+    public bool WasShotFromPlayer => _wasShotFromPlayer;
 
     Turret _owner;
+    bool _wasShotFromPlayer;
 
     void FixedUpdate() =>
         transform.position += transform.right * SPEED;
@@ -34,6 +28,9 @@ public class TurretBullet : MonoBehaviour
             Visuals.Spawn(transform.position, "EffectVisualsThud");
     }
 
-    public void Init(Turret owner) =>
+    public void Init(Turret owner)
+    {
         _owner = owner;
+        _wasShotFromPlayer = _owner.GetComponent<Sticky>().IsConnectedToPlayer;
+    }
 }

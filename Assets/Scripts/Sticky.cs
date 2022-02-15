@@ -15,6 +15,7 @@ public class Sticky : MonoBehaviour
     public bool HasChildren => _directChildren.Count != 0;
     public int NumDescendents => _numDescendents;
     public int NumTNTs => _numTNTs;
+    public bool IsConnectedToPlayer => _root?._isPlayer == true;
 
     [HideInInspector] public float torque;
 
@@ -32,7 +33,7 @@ public class Sticky : MonoBehaviour
     bool _isInChainReaction;
     Sticky _root;
     Sticky _parent;
-    List<Sticky> _directChildren;
+    List<Sticky> _directChildren = new List<Sticky>();
     bool _destroyed;
 
     void Awake()
@@ -78,7 +79,7 @@ public class Sticky : MonoBehaviour
             var deathTrash = collision.collider.GetComponent<DeathTrash>();
             if (deathTrash != null)
             {
-                DestroyFromCollision(collision, false);
+                DestroyFromCollision(collision, null);
                 return;
             }
         }
@@ -89,7 +90,7 @@ public class Sticky : MonoBehaviour
             bullet.Owner != gameObject
         )
         {
-            DestroyFromCollision(collision, true);
+            DestroyFromCollision(collision, bullet);
             return;
         }
     }
@@ -152,21 +153,24 @@ public class Sticky : MonoBehaviour
         ReTopo(visitedSet, otherSticky);
     }
 
-    void DestroyFromCollision(Collision2D collision, bool wasShot) =>
-        DoTheBoom(collision.contacts[0].point, wasShot);
+    void DestroyFromCollision(Collision2D collision, TurretBullet bullet) =>
+        DoTheBoom(collision.contacts[0].point, bullet);
     
-    void DoTheBoom(Vector3 boomPoint, bool wasShot)
+    void DoTheBoom(Vector3 boomPoint, TurretBullet bullet)
     {
         if (_destroyed)
             return;
         _destroyed = true;
 
-        SpawnBoomFX(boomPoint, wasShot);
+        SpawnBoomFX(boomPoint, bullet);
         
         onDestroyed?.Invoke();
 
         if (_isPlayer)
             return;
+        
+        if (bullet?.WasShotFromPlayer == true)
+            ScoreController.AddPointsForShootingSomething(_isTNT);
 
         var numDescendents = 0;
         var numTNTs = 0;
@@ -210,7 +214,7 @@ public class Sticky : MonoBehaviour
     {
         _isInChainReaction = true;
         yield return new WaitForSeconds(CHAIN_REACTION_STEP_DELAY);
-        DoTheBoom(transform.position, false);
+        DoTheBoom(transform.position, null);
     }
 
     void ReTopo(HashSet<Sticky> visitedSet, Sticky newChild)
@@ -259,7 +263,7 @@ public class Sticky : MonoBehaviour
     void SpawnStickVFX(Vector3 stickPoint) =>
         Visuals.Spawn(stickPoint, "EffectVisualsThud");
 
-    void SpawnBoomFX(Vector3 boomPoint, bool wasShot)
+    void SpawnBoomFX(Vector3 boomPoint, TurretBullet bullet)
     {
         var prependExtraShotVisual = false;
         int numVisuals;
@@ -281,12 +285,12 @@ public class Sticky : MonoBehaviour
             else
                 numVisuals = UnityEngine.Random.value > 0.4f ? 1 : 0;
 
-            if (wasShot)
+            if (bullet != null)
                 prependExtraShotVisual = true;
         }
         else
         {
-            vfxBucket = wasShot ? "Shot" : "Sticky";
+            vfxBucket = bullet != null ? "Shot" : "Sticky";
             soundResource = "Sticky";
             numVisuals = 1;
         }
@@ -300,6 +304,16 @@ public class Sticky : MonoBehaviour
         
         vfxBucket = $"EffectVisuals{vfxBucket}";
         Visuals.Spawn(boomPoint, vfxBucket, numVisuals, prependExtraShotVisual);
+
+        if (!_isPlayer && bullet?.WasShotFromPlayer == true)
+        {
+            vfxBucket = $"EffectVisualsNice";
+            Visuals.Spawn(
+                boomPoint,
+                vfxBucket,
+                _isTNT ? 2 : 1
+            );
+        }
     }
 
     void AddChild(Sticky child)
