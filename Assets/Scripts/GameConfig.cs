@@ -13,6 +13,7 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "Config/GameConfig", fileName = "GameConfig")]
 public class GameConfig : ScriptableObject
 {
+    const string PP_HIGHSCORE = "highScore";
     const float MUSIC_VOLUME_ON = -10f;
     const float MUSIC_VOLUME_OFF = -80f;
 
@@ -34,6 +35,7 @@ public class GameConfig : ScriptableObject
         _sc = new StaticCache();
 
         Application.targetFrameRate = 144;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
     
     public static int SpawnCheckLayer
@@ -92,6 +94,12 @@ public class GameConfig : ScriptableObject
 
     public static int NewID => _sc.id++;
     public static AudioMixer Mixer => _i._masterMixer;
+
+    public static int HighScore
+    {
+        get => PlayerPrefs.GetInt(PP_HIGHSCORE, 0);
+        set => PlayerPrefs.SetInt(PP_HIGHSCORE, value);
+    }
 
 #pragma warning disable CS0649
     [SerializeField] AutoPopulated _auto;

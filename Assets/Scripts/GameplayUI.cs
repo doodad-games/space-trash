@@ -1,10 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameplayUI : MonoBehaviour
 {
-    const string PP_HIGHSCORE = "highScore";
+    public static event Action onHighscoreChanged;
 
 #pragma warning disable CS0649
     [SerializeField] TextMeshProUGUI _scoreText;
@@ -46,11 +47,11 @@ public class GameplayUI : MonoBehaviour
     {
         _anim.SetBool("IsEndGame", true);
 
-        var highScore = PlayerPrefs.GetInt(PP_HIGHSCORE, -1);
+        var highScore = GameConfig.HighScore;
         if (ScoreController.Score > highScore)
         {
-            highScore = ScoreController.Score;
-            PlayerPrefs.SetInt(PP_HIGHSCORE, highScore);
+            GameConfig.HighScore = ScoreController.Score;
+            onHighscoreChanged?.Invoke();
         }
 
         _scoreText.text = ScoreController.Score.ToString();

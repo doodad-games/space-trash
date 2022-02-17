@@ -87,6 +87,9 @@ public class Menu : MonoBehaviour
 
     public void HandlePlayPressed() =>
         _anim.SetTrigger("Play");
+    
+    public void HandleScoresPressed() =>
+        LeaderboardController.I.ShowLeaderboard();
 
     public void HandleExitPressed() 
     {
