@@ -4795,9 +4795,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conditions:
   - not: 0
-    type: 0
+    type: 1
     flags:
     - platform_pc
+    - platform_web
   _specificChildren:
   - {fileID: 1610154031}
 --- !u!1 &1730319526
@@ -6130,9 +6131,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conditions:
   - not: 1
-    type: 0
+    type: 1
     flags:
     - platform_pc
+    - platform_web
   _specificChildren:
   - {fileID: 1237667442}
 --- !u!114 &2079749288
@@ -6149,9 +6151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conditions:
   - not: 0
-    type: 0
+    type: 1
     flags:
     - platform_pc
+    - platform_web
   _specificChildren:
   - {fileID: 785397932}
 --- !u!1 &2140505634
