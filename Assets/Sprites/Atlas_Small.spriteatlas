@@ -57,12 +57,15 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4ba54931485dc50419e44b25a4a98e10, type: 3}
   - {fileID: 21300000, guid: 7a6b7a715164e6f49974dbdf06df1256, type: 3}
   - {fileID: 21300000, guid: fc0c5b71b936cb4478facd127c2521ef, type: 3}
+  - {fileID: 21300000, guid: 75e12da1ebc5ef04288ad62ee59ba91c, type: 3}
   - {fileID: 21300000, guid: 226bf1c14f0fbb74fb1f77d5daf0f64a, type: 3}
   - {fileID: 21300000, guid: 8c458ed1142d5aa4c9f8afa945549d4d, type: 3}
   - {fileID: 21300000, guid: 9ad7fe0298033dc48a836c7cb6bcd487, type: 3}
+  - {fileID: 21300000, guid: 36d307121a0d4ce40b9a5207f6f90d5b, type: 3}
   - {fileID: 21300000, guid: 1c821912251959a46af36a276447d852, type: 3}
   - {fileID: 21300000, guid: 03a5122209078cc4d88947e42236eab0, type: 3}
   - {fileID: 21300000, guid: b31784528ad50354ca63b074697dae08, type: 3}
+  - {fileID: 21300000, guid: 5ee27ac214ab3bc4ab3cbf401358223e, type: 3}
   - {fileID: 21300000, guid: a32c53f293893774e9eaccc67d8829bb, type: 3}
   - {fileID: 21300000, guid: 6efde163f65330e45a867493ba872ad6, type: 3}
   - {fileID: 21300000, guid: 46eda083713e3e04881547d23e700208, type: 3}
@@ -77,8 +80,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f8892325d2560734187fbb80f41232ee, type: 3}
   - {fileID: 21300000, guid: 9ee10855f9cf9cd4b82df781eba5cf3b, type: 3}
   - {fileID: 21300000, guid: 6f92efe5919df2a4b8d36b7e09554601, type: 3}
+  - {fileID: 21300000, guid: 6fc66cf58397a914d9235bf62f2ff7a8, type: 3}
   - {fileID: 21300000, guid: 2e800516fcaeba746979bba4f94c037a, type: 3}
   - {fileID: 21300000, guid: 7a8c2526918dd164392539823f68f40c, type: 3}
+  - {fileID: 21300000, guid: 732098268ae447c40b2be9372f3321b4, type: 3}
+  - {fileID: 21300000, guid: 20d246d6670d76341a5645733890515b, type: 3}
   - {fileID: 21300000, guid: 0f8352770e044f646921e75d5353f333, type: 3}
   - {fileID: 21300000, guid: d064c4b7601814e43b46163680d7d3e1, type: 3}
   - {fileID: 21300000, guid: 146a06c789541874ab6a26fe5da56263, type: 3}
@@ -95,12 +101,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 16daef3ae61d722489d4aaaa58bf6663, type: 3}
   - {fileID: 21300000, guid: ad1a395a98efa3a438e82222ad7e48b7, type: 3}
   - {fileID: 21300000, guid: 9d5eb09a9d7ddd74c8950d8dabb2754a, type: 3}
+  - {fileID: 21300000, guid: 53ca2f9a9687c6d4fa4cd6191e8893ef, type: 3}
+  - {fileID: 21300000, guid: 263a15aa5f1d8a342827ffa556965c68, type: 3}
   - {fileID: 21300000, guid: c811f40b872d957459c9f70568c1aa3e, type: 3}
   - {fileID: 21300000, guid: 9aab182baf82dd5489ee60e941c15bcc, type: 3}
   - {fileID: 21300000, guid: eca7e82b00c063a4c9cc4cd3d7096053, type: 3}
   - {fileID: 21300000, guid: e8e52c7b2b6ae094d90ec4543ab19781, type: 3}
   - {fileID: 21300000, guid: 36fc1b8bda50b944c9245622b6ce2a1b, type: 3}
+  - {fileID: 21300000, guid: 509c88cbce6029047b7602cec09c343b, type: 3}
   - {fileID: 21300000, guid: 269723db90d3de14bb46082a73fc0673, type: 3}
+  - {fileID: 21300000, guid: 2fa9e1fb05ce04847a7d048c95070d12, type: 3}
   - {fileID: 21300000, guid: e57d5b0c329936348b1ba6a7b30efcfe, type: 3}
   - {fileID: 21300000, guid: 7264e11c3b54de84c89fbc42f5359170, type: 3}
   - {fileID: 21300000, guid: 9bf9ff3cde750374d995a6b365b2040c, type: 3}
@@ -113,7 +123,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4004d03df1b485c43a14f02e2656b7e8, type: 3}
   - {fileID: 21300000, guid: c497e87dfb2cf0045ac34f64ebdcf1e1, type: 3}
   - {fileID: 21300000, guid: db0a7e8d4b5553b49b3cc6dd8f22a173, type: 3}
+  - {fileID: 21300000, guid: c3ed269d698abb947997ef7e32199d27, type: 3}
   - {fileID: 21300000, guid: 9213789d1b88b8348a85f61bcc74fdbf, type: 3}
+  - {fileID: 21300000, guid: 115080ed76afc2b4d9d218a11586e33f, type: 3}
   - {fileID: 21300000, guid: e261c0ed3e985e244ba1ad5a8c3c7ad0, type: 3}
   - {fileID: 21300000, guid: 0392ff0ed12487146875c50dafaa9cb4, type: 3}
   - {fileID: 21300000, guid: 5677462eac72f8a4dbb37b94f7ce139c, type: 3}
@@ -135,12 +147,15 @@ SpriteAtlas:
   - visual-tnt-1
   - visual-sticky-8
   - visual-tnt-13
+  - trash-medium-5
   - tutorial-w
   - white-square
   - visual-shot-10
+  - trash-small-5
   - visual-sticky-5
   - trash-medium-1
   - visual-player-13
+  - trash-medium-4
   - visual-shot-3
   - visual-shot-11
   - visual-tnt-18
@@ -155,8 +170,11 @@ SpriteAtlas:
   - visual-sticky-4
   - visual-tnt-10
   - visual-shot-12
+  - trash-medium-7
   - visual-tnt-3
   - visual-player-5
+  - trash-small-7
+  - trash-medium-3
   - trash-medium-2
   - tnt
   - visual-shot-8
@@ -173,12 +191,16 @@ SpriteAtlas:
   - visual-tnt-9
   - visual-tnt-6
   - turret-bullet
+  - trash-medium-6
+  - trash-small-8
   - visual-player-7
   - visual-nice-13
   - visual-nice-4
   - tutorial-down
   - visual-sticky-6
+  - trash-small-9
   - visual-player-10
+  - trash-medium-9
   - visual-tnt-16
   - visual-shot-9
   - visual-tnt-5
@@ -191,7 +213,9 @@ SpriteAtlas:
   - tutorial-left
   - tutorial-a
   - visual-thud-1
+  - trash-medium-8
   - visual-nice-8
+  - trash-small-6
   - visual-player-2
   - visual-shot-6
   - visual-shot-5

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 52ffccdf76f0f6a41afaa67c5736b488, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 509c88cbce6029047b7602cec09c343b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064037343734463898, guid: 90cf73ca01556514b94206968a35f75c, type: 3}
       propertyPath: m_Name
-      value: TrashSmall4
+      value: TrashSmall9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90cf73ca01556514b94206968a35f75c, type: 3}
@@ -146,8 +146,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9064037343734463898, guid: 90cf73ca01556514b94206968a35f75c, type: 3}
   m_PrefabInstance: {fileID: 8357449583834776561}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &863448653011576562
-PolygonCollider2D:
+--- !u!61 &8118566258842480316
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,7 +159,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013426095, y: -0.0011121333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -169,14 +169,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.016967773, y: 0.23822483}
-      - {x: -0.20874697, y: 0.15111274}
-      - {x: -0.15992874, y: -0.15707128}
-      - {x: -0.022216797, y: -0.21845612}
-      - {x: 0.1246506, y: -0.16469052}
-      - {x: 0.19568539, y: 0.15649751}
+  serializedVersion: 2
+  m_Size: {x: 0.4304519, y: 0.25513166}
+  m_EdgeRadius: 0
 --- !u!4 &1864066883297898901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7648764637290115684, guid: 90cf73ca01556514b94206968a35f75c, type: 3}

@@ -156,6 +156,12 @@ MonoBehaviour:
       path: Content/Buckets/TrashLarge/TrashLarge3
     - type: TrashLarge
       path: Content/Buckets/TrashLarge/TrashLarge4
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge5
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge6
+    - type: TrashLarge
+      path: Content/Buckets/TrashLarge/TrashLarge7
     - type: TrashMedium
       path: Content/Buckets/TrashMedium/TrashMedium1
     - type: TrashMedium
@@ -164,6 +170,16 @@ MonoBehaviour:
       path: Content/Buckets/TrashMedium/TrashMedium3
     - type: TrashMedium
       path: Content/Buckets/TrashMedium/TrashMedium4
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium5
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium6
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium7
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium8
+    - type: TrashMedium
+      path: Content/Buckets/TrashMedium/TrashMedium9
     - type: TrashSmall
       path: Content/Buckets/TrashSmall/TrashSmall1
     - type: TrashSmall
@@ -172,4 +188,14 @@ MonoBehaviour:
       path: Content/Buckets/TrashSmall/TrashSmall3
     - type: TrashSmall
       path: Content/Buckets/TrashSmall/TrashSmall4
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall5
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall6
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall7
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall8
+    - type: TrashSmall
+      path: Content/Buckets/TrashSmall/TrashSmall9
   _masterMixer: {fileID: 24100000, guid: 87b9cf424d03e594d9a69e1a033e04e9, type: 2}
