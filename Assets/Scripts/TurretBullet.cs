@@ -16,7 +16,7 @@ public class TurretBullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         var turret = collision.collider.GetComponent<Turret>();
-        if (turret == _owner)
+        if (_owner != null && turret == _owner)
             return;
 
         var soundPrefab = Resources.Load<GameObject>("Effects/TurretBulletSoundCollide");

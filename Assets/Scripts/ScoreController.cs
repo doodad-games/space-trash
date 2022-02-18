@@ -11,7 +11,7 @@ public class ScoreController : MonoBehaviour
     public static event Action onScoreChanged;
 
     const float SCORE_PERIOD = 5f;
-    const float AVOIDANCE_MULTIPLIER_PERIOD = 3f;
+    const float AVOIDANCE_MULTIPLIER_PERIOD = 2f;
     const float SURVIVAL_MULTIPLIER_PERIOD = 5f;
     const int MULT_PER_DESCENDANT = 1;
     const int MULT_PER_TNT = 10;
