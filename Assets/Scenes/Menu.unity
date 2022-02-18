@@ -1689,7 +1689,7 @@ MonoBehaviour:
     type: 1
     flags:
     - platform_ios
-    - platform_android
+    - platform_google_play
   _specificChildren:
   - {fileID: 1658870666}
 --- !u!1 &1978224371

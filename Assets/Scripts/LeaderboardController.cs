@@ -43,7 +43,7 @@ public class LeaderboardController : MonoBehaviour
 #if !UNITY_IOS && !GOOGLE_PLAY
     public void ShowLeaderboard() {}
 
-    void MaybeAutoconnect();
+    void MaybeAutoconnect() {}
     void UploadHighscore(int highscore) {}
 #endif
 

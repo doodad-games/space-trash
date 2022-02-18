@@ -81,6 +81,10 @@ public class Menu : MonoBehaviour
         _trashTalkOrder = Enumerable.Range(0, _trashTalks.Length)
             .Shuffle_()
             .ToArray();
+
+#if GOOGLE_PLAY
+        FlagController.Add("platform_google_play");
+#endif
     }
 
     void OnEnable() => _trashTalkI = 0;

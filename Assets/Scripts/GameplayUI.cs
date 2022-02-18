@@ -30,6 +30,9 @@ public class GameplayUI : MonoBehaviour
     
     public void HandleBackToMenuPressed() =>
         _anim.SetTrigger("BackToMenu");
+    
+    public void HandleAgainButtonPressed() =>
+        _anim.SetTrigger("Again");
 
     public void HandleCreditsPressed() =>
         _anim.SetBool("Credits", true);
@@ -41,6 +44,12 @@ public class GameplayUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+    }
+
+    public void Again()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Gameplay");
     }
     
     void HandlePlayerDestroyed()
